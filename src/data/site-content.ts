@@ -338,7 +338,7 @@ export const pricingPage = {
     label: "Per Card",
     amount: "$10 Per Card",
     turnaround: "Target 72-Hour Turnaround",
-    note: "$20 per card to include subgrades.",
+    note: "Add subgrades for $20 per card",
   },
   included: {
     title: "Included With Every Submission",

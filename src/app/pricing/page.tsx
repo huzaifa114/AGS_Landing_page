@@ -7,11 +7,10 @@ import { Checklist } from "@/components/marketing/checklist";
 import { CTABand } from "@/components/marketing/cta-band";
 import { AnimatedBlock } from "@/components/motion/animated-block";
 import { Section } from "@/components/ui/section";
-import { Card, CardContent } from "@/components/ui/card";
+import { PricingHeroCard } from "@/components/marketing/pricing-hero-card";
 import { buttonVariants } from "@/components/ui/button";
 import { pricingPage } from "@/data/site-content";
-import { BODY_MUTED, HEADING_DISPLAY, PAGE_HERO_TITLE } from "@/lib/typography";
-import { cn } from "@/lib/utils";
+import { BODY_MUTED } from "@/lib/typography";
 
 export const metadata: Metadata = {
   title: pricingPage.meta.title,
@@ -30,17 +29,14 @@ export default function PricingPage() {
 
       <Section spacing="md">
         <AnimatedBlock>
-          <div className="mx-auto max-w-lg">
-            <Card className="overflow-hidden border-border/80 shadow-premium ai-console">
-              <div className="gradient-premium px-8 py-12 text-center text-white">
-                <p className="text-caption text-white/80">{pricingPage.price.label}</p>
-                <p className={cn("mt-2", HEADING_DISPLAY, PAGE_HERO_TITLE, "text-white")}>{pricingPage.price.amount}</p>
-                <p className={cn("mt-4 text-body-md text-white/90")}>{pricingPage.price.turnaround}</p>
-              </div>
-              <CardContent className="p-6 text-center">
-                <p className={BODY_MUTED}>{pricingPage.price.note}</p>
-              </CardContent>
-            </Card>
+          <div className="mx-auto max-w-md">
+            <PricingHeroCard
+              label={pricingPage.price.label}
+              amount={pricingPage.price.amount}
+              turnaround={pricingPage.price.turnaround}
+              note={pricingPage.price.note}
+              ctaLabel={pricingPage.cta.button}
+            />
           </div>
         </AnimatedBlock>
       </Section>
