@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <circle cx="26" cy="24" r="17" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+  <path d="M9 24a17 17 0 0 1 34 0Z" fill="#ef4444"/>
+  <line x1="9" y1="24" x2="43" y2="24" stroke="#334155" stroke-width="2"/>
+  <circle cx="26" cy="24" r="5.5" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+  <text x="54" y="19" fill="#facc15" font-family="Arial Black, Helvetica, sans-serif" font-size="13" font-weight="900">POKEMON</text>
+  <text x="54" y="35" fill="#2563eb" font-family="Arial Black, Helvetica, sans-serif" font-size="11" font-weight="900">TCG</text>
+</svg>

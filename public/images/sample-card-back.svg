@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 350" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="250" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#818CF8"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <rect width="250" height="350" rx="14" fill="url(#bg)"/>
+  <rect x="12" y="12" width="226" height="326" rx="10" stroke="#334155" stroke-width="1.5" fill="none"/>
+  <rect x="28" y="36" width="194" height="8" rx="4" fill="#334155"/>
+  <rect x="28" y="54" width="160" height="6" rx="3" fill="#475569"/>
+  <rect x="28" y="68" width="180" height="6" rx="3" fill="#475569"/>
+  <circle cx="125" cy="165" r="52" stroke="url(#ring)" stroke-width="3" fill="#111827"/>
+  <circle cx="125" cy="165" r="38" fill="#1E293B" stroke="#4F46E5" stroke-width="1.5"/>
+  <text x="125" y="160" text-anchor="middle" fill="#E0E7FF" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2">WHITE</text>
+  <text x="125" y="178" text-anchor="middle" fill="#A5B4FC" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2">WHALE</text>
+  <rect x="40" y="245" width="170" height="70" rx="8" fill="#111827" stroke="#334155"/>
+  <rect x="54" y="262" width="90" height="5" rx="2.5" fill="#475569"/>
+  <rect x="54" y="276" width="130" height="5" rx="2.5" fill="#334155"/>
+  <rect x="54" y="290" width="110" height="5" rx="2.5" fill="#334155"/>
+  <text x="125" y="332" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9" letter-spacing="1">AUTHENTICATED GRADING</text>
+</svg>
