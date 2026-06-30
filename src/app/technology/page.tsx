@@ -51,7 +51,7 @@ export default function TechnologyPage() {
           {content.coreTechnology.items.map((item, index) => {
             const Icon = processIcons[index];
             return (
-              <StaggerItem key={item.title}>
+              <StaggerItem key={item.title} index={index}>
                 <PremiumCard
                   icon={<Icon className="h-5 w-5" />}
                   title={item.title}

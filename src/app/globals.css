@@ -389,3 +389,103 @@
   background: rgb(11 16 32 / 0.9);
   box-shadow: 0 0 32px rgb(99 102 241 / 0.12);
 }
+
+/* ── AOS-style scroll reveal (GPU: opacity + transform only) ── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal-down {
+  transform: translate3d(0, -28px, 0);
+}
+
+.scroll-reveal-none {
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-reveal-scale {
+  transform: translate3d(0, 28px, 0) scale(0.98);
+}
+
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.stagger-reveal-item {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stagger-reveal-visible .stagger-reveal-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-progress-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+/* ── Heartbeat / EKG page loader ── */
+.page-loader {
+  opacity: 1;
+  transition: opacity 0.45s ease-in-out;
+}
+
+.page-loader-exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader-ekg {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: page-loader-ekg 1.35s ease-in-out infinite;
+}
+
+.page-loader-sweep {
+  animation: page-loader-sweep 1.35s linear infinite;
+}
+
+@keyframes page-loader-ekg {
+  0%,
+  100% {
+    stroke-dashoffset: 1;
+  }
+  72% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes page-loader-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .stagger-reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

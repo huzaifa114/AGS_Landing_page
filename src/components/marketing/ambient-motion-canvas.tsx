@@ -33,6 +33,7 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
 
     let frame = 0;
     let raf = 0;
+    let visible = true;
     let particles: Particle[] = [];
     let scanY = 0;
     let width = 0;
@@ -135,6 +136,7 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
     }
 
     function paint() {
+      if (!visible) return;
       const dark = isDark();
       ctx.clearRect(0, 0, width, height);
 
@@ -147,11 +149,27 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
       if (!reduceMotion) raf = requestAnimationFrame(paint);
     }
 
+    function startLoop() {
+      if (reduceMotion || !visible) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(paint);
+    }
+
     resize();
-    paint();
+    startLoop();
 
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) startLoop();
+        else cancelAnimationFrame(raf);
+      },
+      { threshold: 0.05 }
+    );
+    visibilityObserver.observe(canvas);
 
     const onTheme = () => {
       if (reduceMotion) paint();
@@ -162,6 +180,7 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      visibilityObserver.disconnect();
       observer.disconnect();
     };
   }, [reduceMotion]);

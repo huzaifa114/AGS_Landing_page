@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { Monitor, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const themes = [
   { value: "light", label: "Light", icon: Sun },
   { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
 ] as const;
 
 export interface ThemeToggleProps {
@@ -18,7 +17,7 @@ export interface ThemeToggleProps {
 }
 
 function ThemeToggle({ className, compact = false }: ThemeToggleProps) {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -37,13 +36,11 @@ function ThemeToggle({ className, compact = false }: ThemeToggleProps) {
     );
   }
 
-  const active = theme ?? "system";
-  const displayTheme = active === "system" ? resolvedTheme ?? "light" : active;
-  const ActiveIcon =
-    displayTheme === "dark" ? Moon : displayTheme === "light" ? Sun : Monitor;
+  const active = resolvedTheme === "dark" ? "dark" : "light";
+  const ActiveIcon = active === "dark" ? Moon : Sun;
 
   if (compact) {
-    const isDark = (resolvedTheme ?? theme) === "dark";
+    const isDark = active === "dark";
 
     return (
       <div className={cn("relative", className)}>

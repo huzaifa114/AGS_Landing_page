@@ -32,7 +32,7 @@ export default function HowItWorksPage() {
         </AnimatedBlock>
         <StaggerReveal className="mx-auto mt-8 max-w-2xl">
           {howItWorksPage.steps.map((step, index) => (
-            <StaggerItem key={step.title}>
+            <StaggerItem key={step.title} index={index}>
               <TimelineStep
                 step={index + 1}
                 title={step.title}

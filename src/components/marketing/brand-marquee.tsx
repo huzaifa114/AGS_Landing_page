@@ -11,13 +11,12 @@ type BrandItem = {
   logo: string;
   logoDark?: string;
   wide?: boolean;
-  extraWide?: boolean;
 };
 
 const BRANDS: BrandItem[] = [
   { name: "Panini", logo: "/images/brands/panini.svg" },
   { name: "Topps", logo: "/images/brands/topps.svg" },
-  { name: "Pokemon", logo: "/images/brands/pokemon.svg", wide: true },
+  { name: "Pokemon", logo: "/images/brands/pokemon.svg" },
   { name: "Yu-Gi-Oh!", logo: "/images/brands/yugioh.svg" },
   {
     name: "Magic: The Gathering",
@@ -44,12 +43,12 @@ function BrandPill({ brand, index }: { brand: (typeof BRANDS)[number]; index: nu
   return (
     <motion.div
       className={cn(
-        "group relative flex h-[72px] shrink-0 items-center justify-center overflow-hidden rounded-2xl px-5",
+        "group relative flex h-[58px] shrink-0 items-center justify-center overflow-hidden rounded-xl px-3",
         /* light — clean white pill */
         "border border-border bg-white shadow-sm",
         /* dark — HUD pill */
         "dark:border-indigo-500/25 dark:bg-[rgb(11_16_32/0.92)] dark:shadow-[0_0_32px_rgb(99_102_241/0.14)]",
-        brand.extraWide ? "w-[280px]" : brand.wide ? "w-[230px]" : "w-[200px]"
+        brand.wide ? "w-[168px]" : "w-[148px]"
       )}
       animate={
         reduceMotion || !isDark
@@ -81,12 +80,12 @@ function BrandPill({ brand, index }: { brand: (typeof BRANDS)[number]; index: nu
       <img
         src={logoSrc}
         alt={`${brand.name} logo`}
-        width={brand.extraWide ? 220 : brand.wide ? 170 : 150}
-        height={40}
+        width={brand.wide ? 130 : 110}
+        height={32}
         className={cn(
           "relative z-10 w-auto object-contain",
           isDark ? "brightness-110 contrast-125" : brand.logoDark ? undefined : "brightness-110 contrast-125",
-          brand.extraWide ? "h-11 max-w-[220px]" : brand.wide ? "h-11 max-w-[170px]" : "h-10 max-w-[150px]"
+          brand.wide ? "h-8 max-w-[130px]" : "h-8 max-w-[110px]"
         )}
         draggable={false}
       />
@@ -101,7 +100,7 @@ function MarqueeRow({ reverse = false }: { reverse?: boolean }) {
   return (
     <div className="ai-marquee-track overflow-hidden py-2">
       <motion.div
-        className="flex w-max items-center gap-5 px-4"
+        className="flex w-max items-center gap-3.5 px-4"
         animate={reduceMotion ? undefined : { x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
         transition={{ duration: reverse ? 38 : 34, repeat: Infinity, ease: "linear" }}
       >
@@ -114,8 +113,6 @@ function MarqueeRow({ reverse = false }: { reverse?: boolean }) {
 }
 
 function BrandMarquee({ className }: { className?: string }) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       className={cn(
@@ -131,16 +128,9 @@ function BrandMarquee({ className }: { className?: string }) {
       <div className="pointer-events-none absolute inset-0 hidden dark:block imaging-grid-overlay opacity-15" />
 
       <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6">
-        <div className="mb-3 flex items-center justify-center gap-2">
-          <motion.span
-            className="h-2 w-2 rounded-full bg-indigo-500 dark:bg-cyan-400"
-            animate={reduceMotion ? undefined : { opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
-          <span className={SECTION_EYEBROW}>
-            Category index
-          </span>
-        </div>
+        <span className={cn("mb-3 block", SECTION_EYEBROW)}>
+          Category index
+        </span>
         <h2 className={cn(HEADING_DISPLAY, SECTION_TITLE)}>
           Trusted Across Major Trading Card Categories
         </h2>

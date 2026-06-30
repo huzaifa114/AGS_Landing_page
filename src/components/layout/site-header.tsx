@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import { MobileNav } from "./mobile-nav";
 import { AuthNav } from "./auth-nav";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -21,15 +20,16 @@ function SiteHeader({ className }: SiteHeaderProps) {
 
   return (
     <>
-      <header
-        className={cn(
-          "sticky top-0 z-40 border-b border-border bg-white/95 backdrop-blur-md dark:border-border/60 dark:bg-surface/90",
-          className
-        )}
-      >
-        <Container>
-          <div className="flex h-16 items-center justify-between lg:h-[72px]">
-            <div className="flex items-center gap-8 lg:gap-10">
+      <div className="sticky top-0 z-40 px-2 pt-2 sm:px-3 lg:px-4">
+        <header
+          className={cn(
+            "mx-auto max-w-[1440px] rounded-full border border-border bg-white/95 shadow-[0_4px_24px_rgb(0_0_0/0.06)] backdrop-blur-md",
+            "dark:border-indigo-500/20 dark:bg-[rgb(12_18_36/0.92)] dark:shadow-[0_8px_32px_rgb(0_0_0/0.4)]",
+            className
+          )}
+        >
+          <div className="flex h-14 items-center justify-between gap-4 px-4 sm:h-16 sm:px-5 lg:px-6">
+            <div className="flex min-w-0 items-center gap-6 lg:gap-10">
               <BrandLogo size="sm" />
               <nav
                 className="hidden items-center gap-0.5 lg:flex"
@@ -47,7 +47,7 @@ function SiteHeader({ className }: SiteHeaderProps) {
               </nav>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <ThemeToggle compact />
               <AuthNav />
               <Link
@@ -71,8 +71,8 @@ function SiteHeader({ className }: SiteHeaderProps) {
               </Button>
             </div>
           </div>
-        </Container>
-      </header>
+        </header>
+      </div>
 
       <MobileNav
         open={mobileOpen}

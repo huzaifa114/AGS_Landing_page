@@ -1,7 +1,7 @@
 "use client";
 
-import { type ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { type ReactNode, useRef } from "react";
+import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 
 export interface MotionRevealProps {
@@ -19,33 +19,24 @@ function MotionReveal({
   direction = "up",
   scale = true,
 }: MotionRevealProps) {
-  const reduceMotion = useReducedMotion();
-
-  const offset =
-    direction === "up" ? 40 : direction === "down" ? -40 : 0;
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px", threshold: 0.12 });
 
   return (
-    <motion.div
-      className={cn(className)}
-      initial={{
-        opacity: 0,
-        y: offset,
-        ...(scale ? { scale: 0.94 } : {}),
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        ...(scale ? { scale: 1 } : {}),
-      }}
-      viewport={{ once: true, margin: "-50px", amount: 0.2 }}
-      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] as const }}
+    <div
+      ref={ref}
+      className={cn(
+        "scroll-reveal",
+        direction === "down" && "scroll-reveal-down",
+        direction === "none" && "scroll-reveal-none",
+        scale && direction !== "none" && "scroll-reveal-scale",
+        inView && "scroll-reveal-visible",
+        className
+      )}
+      style={{ transitionDelay: `${delay}s` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

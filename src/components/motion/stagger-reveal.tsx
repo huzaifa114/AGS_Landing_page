@@ -1,7 +1,7 @@
 "use client";
 
-import { type ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { type CSSProperties, type ReactNode, useRef } from "react";
+import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 
 export interface StaggerRevealProps {
@@ -11,49 +11,34 @@ export interface StaggerRevealProps {
 }
 
 function StaggerReveal({ children, className, stagger = 0.1 }: StaggerRevealProps) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px", threshold: 0.1 });
 
   return (
-    <motion.div
-      className={cn(className)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px", amount: 0.15 }}
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: stagger } },
-      }}
+    <div
+      ref={ref}
+      className={cn(inView && "stagger-reveal-visible", className)}
+      style={{ "--stagger-step": `${stagger}s` } as CSSProperties}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 export interface StaggerItemProps {
   children: ReactNode;
   className?: string;
+  index?: number;
 }
 
-function StaggerItem({ children, className }: StaggerItemProps) {
+function StaggerItem({ children, className, index = 0 }: StaggerItemProps) {
   return (
-    <motion.div
-      className={cn(className)}
-      variants={{
-        hidden: { opacity: 0, y: 32, scale: 0.94 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
-        },
-      }}
+    <div
+      className={cn("stagger-reveal-item", className)}
+      style={{ transitionDelay: `calc(var(--stagger-step, 0.1s) * ${index})` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

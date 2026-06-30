@@ -1,75 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 function ScrollProgress() {
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    restDelta: 0.001,
-  });
-  const [loadPct, setLoadPct] = useState(0);
-  const [showLoad, setShowLoad] = useState(true);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (reduceMotion) {
-      setShowLoad(false);
-      return;
-    }
+    const bar = barRef.current;
+    if (!bar) return;
 
-    let frame: number;
-    let start: number | null = null;
+    let ticking = false;
 
-    const tick = (ts: number) => {
-      if (!start) start = ts;
-      const elapsed = ts - start;
-      const simulated = Math.min(92, (elapsed / 1400) * 92);
-      setLoadPct(simulated);
-      if (elapsed < 1400) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-
-    const finish = () => {
-      setLoadPct(100);
-      setTimeout(() => setShowLoad(false), 500);
+    const update = () => {
+      ticking = false;
+      const scrollTop = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? scrollTop / max : 0;
+      bar.style.transform = `scaleX(${progress})`;
     };
 
-    if (document.readyState === "complete") finish();
-    else window.addEventListener("load", finish);
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
 
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("load", finish);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
-  }, [reduceMotion]);
-
-  if (reduceMotion) return null;
+  }, []);
 
   return (
-    <>
-      {showLoad && (
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-[200]">
-          <motion.div
-            className="h-1 origin-left bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-400 shadow-[0_0_20px_rgb(99_102_241/0.9)]"
-            style={{ scaleX: loadPct / 100 }}
-          />
-          <motion.span
-            className="absolute right-3 top-2 text-[10px] font-bold tabular-nums text-primary"
-            animate={{ opacity: loadPct >= 100 ? 0 : 1 }}
-          >
-            {Math.round(loadPct)}%
-          </motion.span>
-        </div>
-      )}
-
-      <motion.div
-        className="pointer-events-none fixed inset-x-0 top-0 z-[199] h-[3px] origin-left bg-gradient-to-r from-indigo-400 via-violet-500 to-cyan-300 shadow-[0_0_18px_rgb(99_102_241/0.85)]"
-        style={{ scaleX }}
-      />
-    </>
+    <div
+      ref={barRef}
+      className="scroll-progress-bar pointer-events-none fixed inset-x-0 top-0 z-[199] h-[3px] origin-left bg-gradient-to-r from-indigo-400 via-violet-500 to-cyan-300 shadow-[0_0_18px_rgb(99_102_241/0.85)]"
+      aria-hidden="true"
+    />
   );
 }
 

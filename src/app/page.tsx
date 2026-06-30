@@ -107,9 +107,9 @@ export default function HomePage() {
         media={<HeroCardStack />}
       />
 
-      <HomeTrustMetrics />
-
       <BrandMarquee />
+
+      <HomeTrustMetrics />
 
       <Section spacing="md" className="bg-surface">
         <div className="grid items-center gap-8 lg:grid-cols-2">
@@ -177,7 +177,7 @@ export default function HomePage() {
         </MotionReveal>
         <StaggerReveal className="mt-6 grid gap-5 lg:grid-cols-2">
           {content.howItWorks.steps.map((step, index) => (
-            <StaggerItem key={step.title}>
+            <StaggerItem key={step.title} index={index}>
               <TimelineStep
                 step={index + 1}
                 title={step.title}

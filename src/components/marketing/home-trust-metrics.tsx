@@ -213,7 +213,6 @@ function HudMetricCard({
 function HomeTrustMetrics() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -225,16 +224,9 @@ function HomeTrustMetrics() {
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-8 text-center sm:mb-10">
-          <div className="mb-3 flex items-center justify-center gap-2">
-            <motion.span
-              className="h-2 w-2 rounded-full bg-indigo-500 dark:bg-cyan-400"
-              animate={reduceMotion ? undefined : { scale: [1, 1.4, 1], opacity: [1, 0.4, 1] }}
-              transition={{ duration: 1.4, repeat: Infinity }}
-            />
-            <span className={SECTION_EYEBROW}>
-              System telemetry
-            </span>
-          </div>
+          <span className={cn("mb-3 block", SECTION_EYEBROW)}>
+            System telemetry
+          </span>
           <h2 className={cn(HEADING_DISPLAY, SECTION_TITLE)}>
             Real-Time Service Matrix
           </h2>
