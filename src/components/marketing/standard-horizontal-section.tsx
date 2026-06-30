@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useLayoutEffect, useRef } from "react";
+import { type ReactNode, useId, useLayoutEffect, useRef } from "react";
 import {
   motion,
   useMotionValue,
@@ -15,7 +15,6 @@ import { BODY_MUTED, HEADING_DISPLAY, SECTION_EYEBROW, SECTION_TITLE } from "@/l
 export interface StandardPopup {
   label: string;
   className?: string;
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
 export interface StandardHorizontalItem {
@@ -32,12 +31,8 @@ export interface StandardHorizontalSectionProps {
   className?: string;
 }
 
-const POPUP_POSITION: Record<StandardPopup["position"], string> = {
-  "top-left": "-top-3 left-4 sm:-top-4 sm:left-6",
-  "top-right": "-top-3 right-4 sm:-top-4 sm:right-6",
-  "bottom-left": "-bottom-3 left-4 sm:-bottom-4 sm:left-6",
-  "bottom-right": "-bottom-3 right-4 sm:-bottom-4 sm:right-6",
-};
+const SCROLL_VH_PER_CARD = 78;
+const SCROLL_BASE_VH = 115;
 
 function StandardHorizontalSection({
   items,
@@ -55,7 +50,7 @@ function StandardHorizontalSection({
   });
 
   const count = items.length;
-  const sectionHeight = `${(count - 1) * 50 + 100}vh`;
+  const sectionHeight = `${(count - 1) * SCROLL_VH_PER_CARD + SCROLL_BASE_VH}vh`;
 
   useLayoutEffect(() => {
     if (reduceMotion) return;
@@ -88,7 +83,7 @@ function StandardHorizontalSection({
     return (
       <section className={cn("bg-surface-muted py-12", className)}>
         {header && <div className="mx-auto max-w-3xl px-6 pb-8">{header}</div>}
-        <div className="flex gap-5 overflow-x-auto px-6 pb-4 snap-x snap-mandatory">
+        <div className="flex gap-6 overflow-x-auto px-6 pb-4 snap-x snap-mandatory">
           {items.map((item) => (
             <StandardCard key={item.title} item={item} active />
           ))}
@@ -103,7 +98,7 @@ function StandardHorizontalSection({
       className={cn("relative bg-surface-muted", className)}
       style={{ height: sectionHeight }}
     >
-      <div className="sticky top-16 flex h-[min(640px,88vh)] w-full min-w-0 flex-col justify-center py-8 sm:top-20">
+      <div className="sticky top-16 flex h-[min(700px,92vh)] w-full min-w-0 flex-col justify-center py-8 sm:top-20">
         {header && (
           <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-6 sm:px-6">
             {header}
@@ -112,17 +107,17 @@ function StandardHorizontalSection({
 
         <div ref={viewportRef} className="relative w-full min-w-0 overflow-hidden">
           <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 bg-gradient-to-r from-surface-muted to-transparent sm:w-24"
+            className="pointer-events-none absolute inset-y-0 left-0 z-20 w-12 bg-gradient-to-r from-surface-muted to-transparent sm:w-20"
             aria-hidden="true"
           />
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 bg-gradient-to-l from-surface-muted to-transparent sm:w-24"
+            className="pointer-events-none absolute inset-y-0 right-0 z-20 w-12 bg-gradient-to-l from-surface-muted to-transparent sm:w-20"
             aria-hidden="true"
           />
 
           <motion.div
             ref={trackRef}
-            className="flex w-max gap-5 px-4 sm:gap-6 sm:px-6"
+            className="flex w-max gap-8 px-4 sm:gap-10 sm:px-6"
             style={{ x }}
           >
             {items.map((item, index) => (
@@ -137,10 +132,7 @@ function StandardHorizontalSection({
           </motion.div>
         </div>
 
-        <motion.div
-          className="mx-auto mt-6 flex gap-2"
-          aria-hidden="true"
-        >
+        <motion.div className="mx-auto mt-6 flex gap-2" aria-hidden="true">
           {items.map((item, index) => (
             <ScrollDot
               key={item.title}
@@ -202,17 +194,17 @@ function StandardCardSlide({
   const scale = useTransform(
     progress,
     [enter, center, enter + segment],
-    [0.92, 1, 0.92]
+    [0.9, 1, 0.9]
   );
   const opacity = useTransform(
     progress,
-    [enter, enter + segment * 0.15, enter + segment * 0.85, enter + segment],
-    [0.55, 1, 1, 0.55]
+    [enter, enter + segment * 0.12, enter + segment * 0.88, enter + segment],
+    [0.5, 1, 1, 0.5]
   );
 
   return (
     <motion.div
-      className="w-[min(82vw,520px)] shrink-0 snap-center"
+      className="w-[min(94vw,700px)] shrink-0 snap-center"
       style={{ scale, opacity }}
     >
       <StandardCard item={item} progress={progress} index={index} count={count} />
@@ -233,26 +225,32 @@ function StandardCard({
   count?: number;
   active?: boolean;
 }) {
+  const arrowIds = useId().replace(/:/g, "");
   const segment = count ? 1 / count : 1;
   const center = index !== undefined ? index * segment + segment * 0.5 : 0.5;
 
   return (
-    <div className="relative pt-6 pb-4">
-      {item.popups?.map((popup, popupIndex) => (
-        <PopupBadge
-          key={popup.label}
-          popup={popup}
-          popupIndex={popupIndex}
-          progress={progress}
-          center={center}
-          segment={segment}
-          forceActive={active}
-        />
-      ))}
+    <div className="relative flex items-stretch gap-0 pb-2 pt-4">
+      {item.popups && item.popups.length > 0 && (
+        <div className="relative flex w-[min(30vw,148px)] shrink-0 flex-col justify-center gap-8 py-6 pr-1 sm:w-40 sm:gap-10">
+          {item.popups.map((popup, popupIndex) => (
+            <PopupWithArrow
+              key={popup.label}
+              popup={popup}
+              popupIndex={popupIndex}
+              arrowIds={arrowIds}
+              progress={progress}
+              center={center}
+              segment={segment}
+              forceActive={active}
+            />
+          ))}
+        </div>
+      )}
 
       <div
         className={cn(
-          "relative overflow-hidden rounded-3xl border-2 p-7 sm:p-9",
+          "relative min-w-0 flex-1 overflow-hidden rounded-3xl border-2 p-7 sm:p-9",
           "border-indigo-200 bg-white text-foreground",
           "shadow-[0_16px_48px_rgb(99_102_241/0.14),0_0_48px_rgb(99_102_241/0.08)]",
           "dark:border-cyan-400/25 dark:bg-[#0c1018] dark:text-white",
@@ -273,9 +271,69 @@ function StandardCard({
   );
 }
 
-function PopupBadge({
+function CurlyArrow({
+  arrowIds,
+  variant,
+  className,
+}: {
+  arrowIds: string;
+  variant: "upper" | "lower";
+  className?: string;
+}) {
+  const gradientId = `ww-arrow-grad-${arrowIds}`;
+  const markerId = `ww-arrow-head-${arrowIds}`;
+
+  const path =
+    variant === "upper"
+      ? "M4 4 C20 18, 36 8, 58 14 S96 22, 128 18"
+      : "M4 32 C22 18, 40 26, 62 20 S98 12, 128 16";
+
+  return (
+    <svg
+      viewBox="0 0 132 36"
+      fill="none"
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none relative mt-1 h-9 w-[min(24vw,118px)] overflow-visible sm:mt-1.5 sm:h-10 sm:w-32",
+        className
+      )}
+    >
+      <defs>
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="rgb(99 102 241)" stopOpacity="0.55" />
+          <stop offset="55%" stopColor="rgb(56 189 248)" stopOpacity="1" />
+          <stop offset="100%" stopColor="rgb(139 92 246)" stopOpacity="0.85" />
+        </linearGradient>
+        <marker
+          id={markerId}
+          markerWidth="7"
+          markerHeight="7"
+          refX="6"
+          refY="3.5"
+          orient="auto"
+        >
+          <path
+            d="M0 0 L7 3.5 L0 7 Z"
+            className="fill-indigo-500 dark:fill-cyan-400"
+          />
+        </marker>
+      </defs>
+      <path
+        d={path}
+        stroke={`url(#${gradientId})`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        markerEnd={`url(#${markerId})`}
+        className="drop-shadow-[0_0_6px_rgb(56_189_248/0.45)]"
+      />
+    </svg>
+  );
+}
+
+function PopupWithArrow({
   popup,
   popupIndex,
+  arrowIds,
   progress,
   center,
   segment,
@@ -283,67 +341,97 @@ function PopupBadge({
 }: {
   popup: StandardPopup;
   popupIndex: number;
+  arrowIds: string;
   progress?: MotionValue<number>;
   center: number;
   segment: number;
   forceActive?: boolean;
 }) {
+  const variant = popupIndex % 2 === 0 ? "upper" : "lower";
+  const badgeClassName = cn(
+    "relative z-20 inline-flex w-full max-w-[9.5rem] items-center justify-center rounded-full border px-3 py-2 text-center font-hud text-[10px] uppercase leading-tight tracking-wider",
+    "border-indigo-200 bg-white text-primary shadow-lg",
+    "dark:border-cyan-400/40 dark:bg-[#121a33] dark:text-cyan-300 dark:shadow-[0_0_24px_rgb(56_189_248/0.25)]",
+    popup.className
+  );
+
   if (forceActive || !progress) {
     return (
-      <span
-        className={cn(
-          "absolute z-30 rounded-full border px-3 py-1.5 font-hud text-[10px] uppercase tracking-wider",
-          "border-indigo-200 bg-white text-primary shadow-lg",
-          "dark:border-cyan-400/40 dark:bg-[#121a33] dark:text-cyan-300 dark:shadow-[0_0_24px_rgb(56_189_248/0.25)]",
-          POPUP_POSITION[popup.position],
-          popup.className
-        )}
-      >
-        {popup.label}
-      </span>
+      <div className="relative flex flex-col items-start">
+        <span className={badgeClassName}>{popup.label}</span>
+        <CurlyArrow arrowIds={`${arrowIds}-${popupIndex}`} variant={variant} />
+      </div>
     );
   }
 
-  const delay = popupIndex * 0.04;
+  return (
+    <AnimatedPopupWithArrow
+      label={popup.label}
+      className={badgeClassName}
+      arrowIds={`${arrowIds}-${popupIndex}`}
+      variant={variant}
+      popupIndex={popupIndex}
+      progress={progress}
+      center={center}
+      segment={segment}
+    />
+  );
+}
+
+function AnimatedPopupWithArrow({
+  label,
+  className,
+  arrowIds,
+  variant,
+  popupIndex,
+  progress,
+  center,
+  segment,
+}: {
+  label: string;
+  className: string;
+  arrowIds: string;
+  variant: "upper" | "lower";
+  popupIndex: number;
+  progress: MotionValue<number>;
+  center: number;
+  segment: number;
+}) {
+  const delay = popupIndex * 0.05;
   const popupScale = useTransform(
     progress,
     [
-      center - segment * 0.42 + delay,
-      center - segment * 0.1 + delay,
-      center + segment * 0.1,
-      center + segment * 0.42,
+      center - segment * 0.44 + delay,
+      center - segment * 0.12 + delay,
+      center + segment * 0.12,
+      center + segment * 0.44,
     ],
     [0, 1, 1, 0]
   );
   const popupY = useTransform(
     progress,
-    [center - segment * 0.35 + delay, center, center + segment * 0.35],
-    [14, 0, 14]
+    [center - segment * 0.38 + delay, center, center + segment * 0.38],
+    [12, 0, 12]
   );
   const popupOpacity = useTransform(
     progress,
     [
-      center - segment * 0.38 + delay,
-      center - segment * 0.12 + delay,
-      center + segment * 0.12,
-      center + segment * 0.38,
+      center - segment * 0.4 + delay,
+      center - segment * 0.14 + delay,
+      center + segment * 0.14,
+      center + segment * 0.4,
     ],
     [0, 1, 1, 0]
   );
 
   return (
-    <motion.span
-      className={cn(
-        "absolute z-30 rounded-full border px-3 py-1.5 font-hud text-[10px] uppercase tracking-wider",
-        "border-indigo-200 bg-white text-primary shadow-lg",
-        "dark:border-cyan-400/40 dark:bg-[#121a33] dark:text-cyan-300 dark:shadow-[0_0_24px_rgb(56_189_248/0.25)]",
-        POPUP_POSITION[popup.position],
-        popup.className
-      )}
+    <motion.div
+      className="relative flex flex-col items-start"
       style={{ scale: popupScale, y: popupY, opacity: popupOpacity }}
     >
-      {popup.label}
-    </motion.span>
+      <span className={className}>{label}</span>
+      <CurlyArrow arrowIds={arrowIds} variant={variant} />
+    </motion.div>
   );
 }
 

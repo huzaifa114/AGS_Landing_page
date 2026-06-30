@@ -23,7 +23,6 @@ const BRANDS: BrandItem[] = [
     name: "Magic: The Gathering",
     logo: "/images/brands/mtg.svg",
     logoDark: "/images/brands/mtg-dark.svg",
-    extraWide: true,
   },
   { name: "Upper Deck", logo: "/images/brands/upper-deck.svg" },
   { name: "One Piece TCG", logo: "/images/brands/one-piece.svg" },
