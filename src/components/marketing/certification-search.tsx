@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED } from "@/lib/typography";
 import { certificationSearch } from "@/data/site-content";
 
 export interface CertificationSearchProps {
@@ -71,7 +72,7 @@ function CertificationSearch({
         className="border-0 bg-transparent py-8"
         action={
           <div className="flex flex-col items-center gap-2">
-            <p className="font-mono text-body-sm text-muted">
+            <p className={cn("font-mono", BODY_MUTED)}>
               Searched: {searchedNumber}
             </p>
             <Button variant="ghost" size="sm" onClick={handleReset}>
@@ -93,7 +94,8 @@ function CertificationSearch({
         <Button
           type="submit"
           variant="primary"
-          className="w-full font-semibold text-white sm:w-auto"
+          size="md"
+          className="w-full text-white sm:w-auto"
           loading={loading}
         >
           {certificationSearch.button}

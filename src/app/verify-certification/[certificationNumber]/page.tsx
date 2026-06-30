@@ -9,6 +9,9 @@ import { CertificationQrCard } from "@/components/certifications/certification-q
 import { CertificationSearch } from "@/components/marketing/certification-search";
 import { verifyCertification } from "@/lib/certifications/actions";
 import { buttonVariants } from "@/components/ui/button";
+import { formatPageHeroTitle } from "@/components/marketing/page-hero-title";
+import { PAGE_HERO_H1, PAGE_LEAD, SECTION_EYEBROW } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -50,9 +53,9 @@ export default async function VerifyCertificationDetailPage({
               >
                 ← Back to verification
               </Link>
-              <p className="text-caption text-accent">Certification Verification</p>
-              <h1 className="mt-2 text-h2 font-bold tracking-tight">Trust Record</h1>
-              <p className="mt-2 max-w-2xl text-body-md text-muted">
+              <p className={SECTION_EYEBROW}>Certification Verification</p>
+              <h1 className={cn("mt-2", PAGE_HERO_H1)}>{formatPageHeroTitle("Trust Record")}</h1>
+              <p className={cn("mt-2 max-w-2xl", PAGE_LEAD)}>
                 Consistent Grading. Transparent Results.
               </p>
             </div>

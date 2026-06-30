@@ -1,4 +1,10 @@
 import { cn } from "@/lib/utils";
+import {
+  BODY_MUTED,
+  HEADING_DISPLAY,
+  META_TEXT,
+  SUBSECTION_TITLE,
+} from "@/lib/typography";
 
 export interface LegalSection {
   title: string;
@@ -24,28 +30,28 @@ function LegalDocument({ lastUpdated, sections, footerNote, className }: LegalDo
       <span className="hud-corner left-3 top-3 border-l-2 border-t-2" aria-hidden="true" />
       <span className="hud-corner right-3 top-3 border-r-2 border-t-2" aria-hidden="true" />
 
-      <p className="font-hud text-xs uppercase tracking-[0.2em] text-muted-foreground dark:text-slate-400">
+      <p className={META_TEXT}>
         Last updated: {lastUpdated}
       </p>
 
       <div className="mt-8 space-y-8">
         {sections.map((section) => (
           <section key={section.title}>
-            <h2 className="font-heading text-h4 font-bold text-foreground dark:text-white sm:text-h3">
+            <h2 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>
               {section.title}
             </h2>
             {section.paragraphs?.map((paragraph) => (
               <p
                 key={paragraph}
-                className="mt-3 text-body-sm leading-relaxed text-muted-foreground dark:text-slate-400 sm:text-body-md"
+                className={cn("mt-3", BODY_MUTED)}
               >
                 {paragraph}
               </p>
             ))}
             {section.list && section.list.length > 0 && (
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-body-sm text-muted-foreground dark:text-slate-400 sm:text-body-md">
+              <ul className={cn("mt-3 list-disc space-y-2 pl-5", BODY_MUTED)}>
                 {section.list.map((item) => (
-                  <li key={item} className="leading-relaxed">
+                  <li key={item}>
                     {item}
                   </li>
                 ))}
@@ -56,7 +62,7 @@ function LegalDocument({ lastUpdated, sections, footerNote, className }: LegalDo
       </div>
 
       {footerNote && (
-        <p className="mt-10 border-t border-border pt-6 text-body-sm text-muted-foreground dark:text-slate-500">
+        <p className={cn("mt-10 border-t border-border pt-6", BODY_MUTED)}>
           {footerNote}
         </p>
       )}

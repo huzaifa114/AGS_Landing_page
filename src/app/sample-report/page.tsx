@@ -54,7 +54,7 @@ export default function SampleReportPage() {
         description="Every submission includes a full digital grading report."
         variant="premium"
         actions={
-          <Link href="/submit-cards" className={buttonVariants({ variant: "light", size: "lg" })}>
+          <Link href="/submit-cards" className={buttonVariants({ variant: "light", size: "md" })}>
             Submit Cards
           </Link>
         }

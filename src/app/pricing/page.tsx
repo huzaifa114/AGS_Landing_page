@@ -10,6 +10,8 @@ import { Section } from "@/components/ui/section";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { pricingPage } from "@/data/site-content";
+import { BODY_MUTED, HEADING_DISPLAY, PAGE_HERO_TITLE } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: pricingPage.meta.title,
@@ -32,11 +34,11 @@ export default function PricingPage() {
             <Card className="overflow-hidden border-border/80 shadow-premium ai-console">
               <div className="gradient-premium px-8 py-12 text-center text-white">
                 <p className="text-caption text-white/80">{pricingPage.price.label}</p>
-                <p className="mt-2 text-display-lg font-bold">{pricingPage.price.amount}</p>
-                <p className="mt-4 text-body-sm text-white/90">{pricingPage.price.turnaround}</p>
+                <p className={cn("mt-2", HEADING_DISPLAY, PAGE_HERO_TITLE, "text-white")}>{pricingPage.price.amount}</p>
+                <p className={cn("mt-4 text-body-md text-white/90")}>{pricingPage.price.turnaround}</p>
               </div>
               <CardContent className="p-6 text-center">
-                <p className="text-body-sm text-muted">{pricingPage.price.note}</p>
+                <p className={BODY_MUTED}>{pricingPage.price.note}</p>
               </CardContent>
             </Card>
           </div>
@@ -58,7 +60,7 @@ export default function PricingPage() {
         <AnimatedBlock>
           <div className="mx-auto max-w-2xl space-y-3 text-center">
             {pricingPage.simplicity.map((line) => (
-              <p key={line} className="text-body-sm text-muted">
+              <p key={line} className={BODY_MUTED}>
                 {line}
               </p>
             ))}
@@ -74,7 +76,7 @@ export default function PricingPage() {
           actions={
             <Link
               href="/submit-cards"
-              className={buttonVariants({ variant: "light", size: "lg", className: "font-semibold" })}
+              className={buttonVariants({ variant: "light", size: "md" })}
             >
               {pricingPage.cta.button}
             </Link>

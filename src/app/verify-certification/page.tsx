@@ -9,6 +9,8 @@ import { CTABand } from "@/components/marketing/cta-band";
 import { Section } from "@/components/ui/section";
 import { buttonVariants } from "@/components/ui/button";
 import { verifyChecklist, verifyPage } from "@/data/site-content";
+import { BODY_TEXT } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: verifyPage.meta.title,
@@ -44,7 +46,7 @@ export default function VerifyCertificationPage() {
             title={verifyPage.buyersSellers.title}
             description={verifyPage.buyersSellers.description}
           />
-          <p className="mt-8 text-h4 font-bold text-foreground">
+          <p className={cn("mt-8", BODY_TEXT, "font-semibold")}>
             {verifyPage.buyersSellers.tagline}
           </p>
         </div>
@@ -54,7 +56,7 @@ export default function VerifyCertificationPage() {
         title={verifyPage.hero.title}
         description={verifyPage.hero.description}
         actions={
-          <Link href="#verify-search" className={buttonVariants({ size: "lg", className: "font-semibold text-white" })}>
+          <Link href="#verify-search" className={buttonVariants({ size: "md", className: "text-white" })}>
             {verifyPage.cta.button}
           </Link>
         }

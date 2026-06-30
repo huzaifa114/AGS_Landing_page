@@ -47,12 +47,12 @@ export default async function VerifyEmailPage({
               <CheckCircle2 className="h-7 w-7" />
             </div>
             <div className="flex w-full flex-col gap-3">
-              <Link href="/login" className={cn(buttonVariants({ size: "lg" }), "w-full")}>
+              <Link href="/login" className={cn(buttonVariants({ size: "md" }), "w-full")}>
                 Sign In
               </Link>
               <Link
                 href="/submit-cards"
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full")}
+                className={cn(buttonVariants({ variant: "outline", size: "md" }), "w-full")}
               >
                 Submit Cards
               </Link>
@@ -71,7 +71,7 @@ export default async function VerifyEmailPage({
                 message="The link may have already been used or is incorrect."
               />
             )}
-            <Link href="/login" className={cn(buttonVariants({ size: "lg" }), "w-full text-center")}>
+            <Link href="/login" className={cn(buttonVariants({ size: "md" }), "w-full text-center")}>
               Sign In
             </Link>
           </div>

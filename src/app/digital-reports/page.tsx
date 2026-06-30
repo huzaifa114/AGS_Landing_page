@@ -10,6 +10,7 @@ import { CTABand } from "@/components/marketing/cta-band";
 import { Section } from "@/components/ui/section";
 import { buttonVariants } from "@/components/ui/button";
 import { digitalReportsPage } from "@/data/site-content";
+import { BODY_MUTED } from "@/lib/typography";
 
 export const metadata: Metadata = {
   title: digitalReportsPage.meta.title,
@@ -31,7 +32,7 @@ export default function DigitalReportsPage() {
       <Section spacing="md">
         <AnimatedBlock>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-body-sm text-muted leading-relaxed">{content.overview}</p>
+            <p className={BODY_MUTED}>{content.overview}</p>
           </div>
         </AnimatedBlock>
       </Section>
@@ -70,7 +71,7 @@ export default function DigitalReportsPage() {
           actions={
             <Link
               href="/submit-cards"
-              className={buttonVariants({ variant: "light", size: "lg", className: "font-semibold" })}
+              className={buttonVariants({ variant: "light", size: "md" })}
             >
               {content.cta.button}
             </Link>

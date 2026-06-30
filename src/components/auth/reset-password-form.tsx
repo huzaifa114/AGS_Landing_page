@@ -78,7 +78,7 @@ function ResetPasswordForm({ token }: { token: string }) {
           error={errors.confirmPassword?.message}
           {...register("confirmPassword")}
         />
-        <Button type="submit" size="lg" loading={loading} className="w-full">
+        <Button type="submit" size="md" loading={loading} className="w-full">
           Update Password
         </Button>
       </form>

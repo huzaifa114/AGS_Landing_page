@@ -1,17 +1,47 @@
-/** Shared heading scales — arbitrary clamps so sizes apply reliably in Tailwind v4 */
+/** Shared typography — single source of truth site-wide */
 
-export const FEATURE_SECTION_TITLE =
-  "text-[clamp(2.75rem,6.5vw,4.25rem)] sm:text-[clamp(3.25rem,7.5vw,5.25rem)] lg:text-[clamp(3.5rem,4.2vw,5.75rem)]";
+/** Montserrat display headings */
+export const HEADING_DISPLAY =
+  "font-heading font-extrabold leading-[1.08] tracking-tight text-foreground dark:text-white";
 
-/** Slightly smaller than feature — for standard page sections */
-export const SECTION_TITLE =
-  "text-[clamp(2.45rem,5.8vw,3.85rem)] sm:text-[clamp(2.9rem,6.8vw,4.55rem)] lg:text-[clamp(3.15rem,4vw,5rem)]";
+/** H1 — page heroes (homepage + inner pages) */
+export const PAGE_HERO_TITLE = "text-display-lg sm:text-display-xl";
 
-/** Inner-page hero H1 — matches homepage display scale */
-export const PAGE_HERO_TITLE =
-  "text-[clamp(2.85rem,6.5vw,4.5rem)] sm:text-[clamp(3.25rem,7.5vw,5.25rem)] lg:text-[clamp(3.5rem,5vw,5.75rem)]";
+/** Combined H1 classes for hero + auth pages */
+export const PAGE_HERO_H1 = `${HEADING_DISPLAY} ${PAGE_HERO_TITLE}`;
 
-export const SECTION_EYEBROW = "text-sm";
+/** Purple accent line on H1 (matches homepage hero) */
+export const H1_ACCENT = "text-primary dark:text-violet-400";
 
+/** H2 — section titles */
+export const SECTION_TITLE = "text-h1 lg:text-display-lg";
+
+/** H3 / H4 — cards, panels, subsections */
+export const SUBSECTION_TITLE = "text-h4";
+
+/** HUD label above headings */
+export const SECTION_EYEBROW =
+  "font-hud text-caption font-bold uppercase tracking-[0.24em] text-primary dark:text-cyan-400";
+
+/** Secondary line under section headings */
+export const SECTION_META =
+  "font-hud text-caption font-bold uppercase tracking-[0.12em] text-muted-foreground dark:text-slate-400";
+
+/** Dates, labels, footer column titles */
+export const META_TEXT =
+  "font-hud text-caption font-bold uppercase tracking-[0.2em] text-muted-foreground dark:text-slate-400";
+
+/** Hero / section lead paragraphs */
 export const PAGE_LEAD =
-  "text-body-md leading-relaxed sm:text-body-lg";
+  "text-body-md leading-relaxed text-muted-foreground dark:text-slate-400";
+
+/** Standard body copy */
+export const BODY_TEXT =
+  "text-body-md leading-relaxed text-foreground dark:text-slate-300";
+
+/** Muted body copy */
+export const BODY_MUTED =
+  "text-body-md leading-relaxed text-muted-foreground dark:text-slate-400";
+
+/** @deprecated Use SECTION_TITLE */
+export const FEATURE_SECTION_TITLE = SECTION_TITLE;

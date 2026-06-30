@@ -53,8 +53,8 @@ function SiteHeader({ className }: SiteHeaderProps) {
               <Link
                 href={navigation.submitCards.href}
                 className={cn(
-                  buttonVariants({ variant: "primary", size: "sm" }),
-                  "hidden font-semibold text-white sm:inline-flex"
+                  buttonVariants({ variant: "primary", size: "md" }),
+                  "hidden text-white sm:inline-flex"
                 )}
               >
                 {navigation.submitCards.label}

@@ -21,6 +21,7 @@ import { StaggerItem, StaggerReveal } from "@/components/motion/stagger-reveal";
 import { Section } from "@/components/ui/section";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED } from "@/lib/typography";
 import { home } from "@/data/site-content";
 
 export const metadata: Metadata = {
@@ -81,13 +82,7 @@ export default function HomePage() {
   return (
     <MarketingPage>
       <CinematicHero
-        title={
-          <>
-            {content.hero.titleLine1}
-            <br />
-            <span className="text-primary">{content.hero.titleLine2}</span>
-          </>
-        }
+        title={`${content.hero.titleLine1} ${content.hero.titleLine2}`}
         description={content.hero.description}
         subtext={content.hero.subtext}
         trustBullets={<TrustBullets items={[...content.trustBullets]} />}
@@ -107,11 +102,10 @@ export default function HomePage() {
               <SectionIntro
                 align="left"
                 title={content.collectorsDeserveBetter.title}
-                size="feature"
               />
             </MotionReveal>
             <MotionReveal delay={0.08}>
-              <div className="mt-4 space-y-3 text-body-sm text-muted/90 leading-relaxed sm:text-body-md">
+              <div className={cn("mt-4 space-y-3", BODY_MUTED)}>
                 {content.collectorsDeserveBetter.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -181,7 +175,7 @@ export default function HomePage() {
           <div className="mt-5">
             <Link
               href="/how-it-works"
-              className={cn(buttonVariants({ variant: "outline" }), "gap-2 font-semibold")}
+              className={cn(buttonVariants({ variant: "outline", size: "md" }), "gap-2")}
             >
               {content.howItWorks.cta}
               <ArrowRight className="h-4 w-4" />
@@ -199,11 +193,11 @@ export default function HomePage() {
                 className="mt-5"
                 items={content.moreThanGrade.checklist.map((text) => ({ text }))}
               />
-              <p className="mt-5 text-body-sm text-muted leading-relaxed sm:text-body-md">
+              <p className={cn("mt-5", BODY_MUTED)}>
                 {content.moreThanGrade.description}
               </p>
               <div className="mt-5">
-                <PremiumButton href="/sample-report" variant="outline" size="md">
+                <PremiumButton href="/sample-report" variant="outline">
                   {content.moreThanGrade.cta}
                 </PremiumButton>
               </div>

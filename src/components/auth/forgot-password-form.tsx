@@ -74,7 +74,7 @@ function ForgotPasswordForm() {
           error={errors.email?.message}
           {...register("email")}
         />
-        <Button type="submit" size="lg" loading={loading} className="w-full">
+        <Button type="submit" size="md" loading={loading} className="w-full">
           Send Reset Link
         </Button>
       </form>

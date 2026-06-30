@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { PasswordField } from "@/components/auth/password-field";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
+import { BODY_MUTED } from "@/lib/typography";
 
 function LoginForm() {
   const [serverError, setServerError] = useState("");
@@ -46,16 +48,24 @@ function LoginForm() {
       description="Sign in to your White Whale account"
       footer={
         <>
-          Ready to grade your cards?{" "}
-          <Link href="/submit-cards" className="font-medium text-primary hover:underline">
-            Start a submission
-          </Link>
+          <p>
+            Don&apos;t have an account?{" "}
+            <Link href="/register" className="font-semibold text-primary hover:underline">
+              Create account
+            </Link>
+          </p>
+          <p className="mt-3">
+            Ready to grade your cards?{" "}
+            <Link href="/submit-cards" className="font-semibold text-primary hover:underline">
+              Start a submission
+            </Link>
+          </p>
         </>
       }
     >
       {serverError && (
         <p
-          className="mb-6 rounded-xl border border-error/30 bg-error-soft p-4 text-body-sm text-error"
+          className={cn("mb-6 rounded-xl border border-error/30 bg-error-soft p-4 text-error", BODY_MUTED)}
           role="alert"
         >
           {serverError}
@@ -93,9 +103,9 @@ function LoginForm() {
         </div>
         <Button
           type="submit"
-          size="lg"
+          size="md"
           loading={loading}
-          className="w-full font-semibold text-white"
+          className="w-full text-white"
         >
           Login
         </Button>

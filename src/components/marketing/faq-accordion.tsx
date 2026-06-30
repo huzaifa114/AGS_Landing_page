@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED, BODY_TEXT } from "@/lib/typography";
 
 export interface FAQItem {
   question: string;
@@ -34,7 +35,7 @@ function FAQAccordion({ items, className }: FAQAccordionProps) {
               onClick={() => setOpenIndex(isOpen ? null : index)}
               aria-expanded={isOpen}
             >
-              <span className="text-body-md font-semibold text-foreground">
+              <span className={cn(BODY_TEXT, "font-semibold")}>
                 {item.question}
               </span>
               <ChevronDown
@@ -47,7 +48,7 @@ function FAQAccordion({ items, className }: FAQAccordionProps) {
             </button>
             {isOpen && (
               <div className="border-t border-border px-6 pb-6 pt-4">
-                <p className="text-body-md text-muted leading-relaxed">
+                <p className={BODY_MUTED}>
                   {item.answer}
                 </p>
               </div>

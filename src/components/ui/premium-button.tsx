@@ -18,7 +18,7 @@ function PremiumButton({
   children,
   className,
   variant = "primary",
-  size = "lg",
+  size = "md",
 }: PremiumButtonProps) {
   return (
     <Link
@@ -26,11 +26,10 @@ function PremiumButton({
       className={cn(
         buttonVariants({
           variant: variant === "primary" ? "primary" : "outline",
-          size: size === "lg" ? "lg" : "md",
+          size,
         }),
         variant === "primary" &&
-          "font-semibold text-white shadow-[0_4px_20px_rgb(99_102_241/0.35)] transition-all hover:-translate-y-px hover:shadow-[0_8px_28px_rgb(99_102_241/0.42)] active:translate-y-0",
-        variant === "outline" && "font-semibold",
+          "text-white shadow-[0_4px_20px_rgb(99_102_241/0.35)] transition-all hover:-translate-y-px hover:shadow-[0_8px_28px_rgb(99_102_241/0.42)] active:translate-y-0",
         className
       )}
     >

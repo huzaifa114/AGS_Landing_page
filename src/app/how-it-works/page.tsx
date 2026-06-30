@@ -52,7 +52,7 @@ export default function HowItWorksPage() {
           actions={
             <Link
               href="/submit-cards"
-              className={buttonVariants({ variant: "light", size: "lg", className: "font-semibold" })}
+              className={buttonVariants({ variant: "light", size: "md" })}
             >
               {howItWorksPage.cta.button}
             </Link>

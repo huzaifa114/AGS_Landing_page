@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { HEADING_DISPLAY, SECTION_EYEBROW, SECTION_META, SECTION_TITLE } from "@/lib/typography";
 
 type BrandItem = {
   name: string;
@@ -137,14 +138,14 @@ function BrandMarquee({ className }: { className?: string }) {
             animate={reduceMotion ? undefined : { opacity: [1, 0.3, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           />
-          <span className="font-hud text-[11px] uppercase tracking-[0.28em] text-indigo-600 dark:text-cyan-400/80">
+          <span className={SECTION_EYEBROW}>
             Category index
           </span>
         </div>
-        <h2 className="font-heading text-display-xl font-extrabold uppercase tracking-wide text-foreground dark:text-white">
+        <h2 className={cn(HEADING_DISPLAY, SECTION_TITLE)}>
           Trusted Across Major Trading Card Categories
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl font-hud text-sm uppercase tracking-[0.12em] text-muted-foreground dark:text-slate-400">
+        <p className={cn("mx-auto mt-3 max-w-2xl", SECTION_META)}>
           Supported manufacturer protocols · holographic brand stream
         </p>
       </div>

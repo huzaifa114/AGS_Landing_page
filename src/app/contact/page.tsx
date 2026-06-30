@@ -5,6 +5,8 @@ import { HeroShell } from "@/components/marketing/hero-shell";
 import { ContactForm } from "@/components/marketing/contact-form";
 import { Section } from "@/components/ui/section";
 import { Card, CardContent } from "@/components/ui/card";
+import { BODY_MUTED, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -55,8 +57,8 @@ export default function ContactPage() {
                     {card.icon}
                   </div>
                   <div>
-                    <h3 className="text-body-md font-semibold">{card.title}</h3>
-                    <p className="mt-1 text-body-sm text-muted">{card.description}</p>
+                    <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>{card.title}</h3>
+                    <p className={cn("mt-1", BODY_MUTED)}>{card.description}</p>
                   </div>
                 </CardContent>
               </Card>

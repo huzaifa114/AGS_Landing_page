@@ -6,6 +6,8 @@ import { AmbientHeroBackground } from "@/components/marketing/ambient-hero-backg
 import { Container } from "@/components/ui/container";
 import { PremiumButton } from "@/components/ui/premium-button";
 import { cn } from "@/lib/utils";
+import { HEADING_DISPLAY, PAGE_HERO_TITLE, PAGE_LEAD, BODY_MUTED } from "@/lib/typography";
+import { formatPageHeroTitle } from "@/components/marketing/page-hero-title";
 
 export interface CinematicHeroProps {
   title: ReactNode;
@@ -50,22 +52,22 @@ function CinematicHero({
           <div className="flex flex-col gap-4">
             <motion.h1
               {...fadeUp(0)}
-              className="max-w-3xl text-display-lg font-bold tracking-tight text-foreground sm:text-display-xl"
+              className={cn("max-w-3xl", HEADING_DISPLAY, PAGE_HERO_TITLE)}
             >
-              {title}
+              {formatPageHeroTitle(title)}
             </motion.h1>
 
             {description && (
               <motion.p
                 {...fadeUp(0.1)}
-                className="max-w-lg text-body-sm text-muted leading-relaxed sm:text-body-md"
+                className={cn("max-w-lg", PAGE_LEAD)}
               >
                 {description}
               </motion.p>
             )}
 
             {subtext && (
-              <motion.p {...fadeUp(0.16)} className="max-w-lg text-body-sm text-muted">
+              <motion.p {...fadeUp(0.16)} className={cn("max-w-lg", BODY_MUTED)}>
                 {subtext}
               </motion.p>
             )}
@@ -75,12 +77,12 @@ function CinematicHero({
             {(primaryCta || secondaryCta) && (
               <motion.div {...fadeUp(0.28)} className="flex flex-wrap gap-4 pt-2">
                 {primaryCta && (
-                  <PremiumButton href={primaryCta.href} size="lg">
+                  <PremiumButton href={primaryCta.href}>
                     {primaryCta.label}
                   </PremiumButton>
                 )}
                 {secondaryCta && (
-                  <PremiumButton href={secondaryCta.href} variant="outline" size="lg">
+                  <PremiumButton href={secondaryCta.href} variant="outline">
                     {secondaryCta.label}
                   </PremiumButton>
                 )}

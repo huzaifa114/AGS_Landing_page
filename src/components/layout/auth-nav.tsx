@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import { navigation } from "@/data/site-content";
 import { cn } from "@/lib/utils";
 
@@ -8,8 +7,8 @@ function AuthNav() {
     <Link
       href={navigation.login.href}
       className={cn(
-        buttonVariants({ variant: "ghost", size: "sm" }),
-        "hidden font-medium text-foreground sm:inline-flex"
+        "hidden rounded-lg px-3 py-2 text-body-sm font-medium text-foreground/75 transition-colors",
+        "hover:bg-indigo-50 hover:text-foreground dark:hover:bg-surface-muted sm:inline-flex sm:items-center"
       )}
     >
       {navigation.login.label}

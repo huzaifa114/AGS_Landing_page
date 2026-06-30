@@ -151,7 +151,7 @@ function CertificationDetailView({
             <h3 className="text-h4 font-semibold">Timeline</h3>
             <Link
               href={`/verify-certification/${certification.certificationNumber}`}
-              className={buttonVariants({ variant: "outline", size: "sm" })}
+              className={buttonVariants({ variant: "outline", size: "md" })}
             >
               Public Verification
             </Link>

@@ -10,13 +10,13 @@ import {
   Crosshair,
   Layers,
   ScanLine,
-  Sparkles,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { CardImagingOverlay } from "@/components/marketing/card-imaging-overlay";
 import { sampleCardImages } from "@/data/site-content";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED, BODY_TEXT, META_TEXT, SECTION_META, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
 
 type SubgradeKey = "centering" | "corners" | "edges" | "surface";
 type CardSide = "front" | "back";
@@ -251,14 +251,14 @@ function ImagingReportPanel({ className }: { className?: string }) {
 
       <div className="relative grid grid-cols-[1fr_auto] items-end gap-x-4 border-b border-border dark:border-white/10 px-4 py-3 sm:px-5">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary dark:text-indigo-400">
+          <p className={META_TEXT}>
             Digital Grading Report
           </p>
-          <h3 className="mt-0.5 text-xl font-bold text-foreground sm:text-2xl">Victor Wembanyama</h3>
+          <h3 className={cn("mt-0.5", HEADING_DISPLAY, SUBSECTION_TITLE)}>Victor Wembanyama</h3>
           <span className="font-mono text-xs text-muted-foreground dark:text-slate-500">WW-000001</span>
         </div>
         <div className="text-right">
-          <p className="font-hud text-[10px] font-bold uppercase tracking-[0.2em] text-primary dark:text-cyan-400">
+          <p className={cn(SECTION_META, "text-primary dark:text-cyan-400")}>
             Final Grade
           </p>
           <div className="relative mt-1 inline-flex flex-col items-end">
@@ -348,30 +348,14 @@ function ImagingReportPanel({ className }: { className?: string }) {
                 <MetricCell key={m.label} label={m.label} value={m.value} suffix={m.suffix} active={inView} />
               ))}
             </dl>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={`${cardSide}-${activeSubgrade}`}
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.28, ease }}
-                className="mt-2.5 border-t border-border dark:border-white/8 pt-2.5 text-xs text-muted-foreground dark:text-slate-400"
-              >
-                <span className="font-semibold uppercase text-indigo-300">{cardSide}</span>
-                {" · "}
-                <span className="font-semibold text-indigo-300">{activeItem.label}</span>
-                {" — "}
-                {conditionText}
-              </motion.p>
-            </AnimatePresence>
           </div>
         </div>
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-h4 font-bold text-foreground dark:text-white">Condition Analytics</h4>
-              <p className="mt-0.5 text-body-sm capitalize text-muted-foreground dark:text-slate-400">
+              <h4 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>Condition Analytics</h4>
+              <p className={cn("mt-0.5 capitalize", BODY_MUTED)}>
                 {cardSide} surface · auto-indexed
               </p>
             </div>
@@ -403,11 +387,10 @@ function ImagingReportPanel({ className }: { className?: string }) {
               transition={{ duration: 0.3, ease }}
               className="overflow-hidden rounded-xl border border-indigo-500/30 bg-indigo-500/8 px-3 py-3"
             >
-              <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wide text-indigo-300">
-                <Sparkles className="h-3 w-3" />
+              <div className="text-[10px] font-mono uppercase tracking-wide text-indigo-300">
                 {cardSide} · {signalText}
               </div>
-              <p className="mt-2 text-body-sm leading-relaxed text-muted-foreground dark:text-slate-300">
+              <p className={cn("mt-2", BODY_MUTED)}>
                 <span className="font-semibold text-foreground dark:text-white">{activeItem.label}</span>
                 {" — "}
                 {conditionText}
@@ -428,7 +411,7 @@ function ImagingReportPanel({ className }: { className?: string }) {
           </div>
 
           <div>
-            <p className="text-body-sm font-bold text-muted-foreground dark:text-slate-300">Certification</p>
+            <p className={cn(BODY_TEXT, "font-semibold text-muted-foreground dark:text-slate-300")}>Certification</p>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
               <Badge variant="premium">WW-000001</Badge>
               <Badge variant="info">Verified Record</Badge>

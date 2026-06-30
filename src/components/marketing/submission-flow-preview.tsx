@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { submitCardsPage } from "@/data/site-content";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
 
 const stepIcons = [LogIn, Package, CheckCircle2, Truck, ShoppingCart, CheckCircle2];
 
@@ -46,8 +47,8 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
                   </div>
                   <div>
                     <p className="text-caption text-foreground">Step {String(index + 1).padStart(2, "0")}</p>
-                    <h3 className="mt-1 font-bold text-foreground">{step.title}</h3>
-                    <p className="mt-2 text-body-sm text-muted leading-relaxed">
+                    <h3 className={cn("mt-1", HEADING_DISPLAY, SUBSECTION_TITLE)}>{step.title}</h3>
+                    <p className={cn("mt-2", BODY_MUTED)}>
                       {step.description}
                     </p>
                   </div>
@@ -63,7 +64,7 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
           <span className="hud-corner left-2 top-2 border-l border-t" aria-hidden="true" />
           <span className="hud-corner right-2 top-2 border-r border-t" aria-hidden="true" />
           <CardContent className="p-6 sm:p-8">
-            <h3 className="text-h4 font-bold text-foreground">{content.included.title}</h3>
+            <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>{content.included.title}</h3>
             <Checklist
               className="mt-6"
               items={content.included.items.map((text) => ({ text }))}
@@ -75,8 +76,8 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
           <span className="hud-corner left-2 top-2 border-l border-t" aria-hidden="true" />
           <span className="hud-corner right-2 top-2 border-r border-t" aria-hidden="true" />
           <CardContent className="p-6 sm:p-8">
-            <h3 className="text-h4 font-bold text-foreground">Accepted payment methods</h3>
-            <p className="mt-2 text-body-sm text-muted">
+            <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>Accepted payment methods</h3>
+            <p className={cn("mt-2", BODY_MUTED)}>
               Payment options shown for preview. Checkout is not active in this release.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
@@ -94,11 +95,11 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
       <Card className="ai-console overflow-hidden border-border/80 shadow-premium">
         <CardContent className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="max-w-xl">
-            <p className="text-body-sm text-muted">{content.notice}</p>
+            <p className={BODY_MUTED}>{content.notice}</p>
           </div>
           <Link
             href="/login?callbackUrl=/submit-cards"
-            className={buttonVariants({ size: "lg", className: "shrink-0 font-semibold text-white" })}
+            className={buttonVariants({ size: "md", className: "shrink-0 text-white" })}
           >
             {content.cta}
           </Link>

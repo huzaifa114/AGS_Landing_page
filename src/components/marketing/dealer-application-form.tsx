@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { dealerProgramPage } from "@/data/site-content";
+import { BODY_MUTED, BODY_TEXT } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 const volumeOptions = [
   { value: "1-50", label: "1–50 cards / month" },
@@ -28,10 +30,10 @@ function DealerApplicationForm() {
     return (
       <Card id="dealer-form" className="ai-console border-border/80 shadow-premium">
         <CardContent className="p-8 text-center">
-          <p className="text-body-md font-semibold text-foreground">
+          <p className={cn(BODY_TEXT, "font-semibold")}>
             Application received
           </p>
-          <p className="mt-2 text-body-sm text-muted">
+          <p className={cn("mt-2", BODY_MUTED)}>
             Thanks for your interest. Our team will review your application and
             get back to you shortly.
           </p>
@@ -71,7 +73,7 @@ function DealerApplicationForm() {
             label="Message"
             placeholder="Tell us about your business and submission needs..."
           />
-          <Button type="submit" size="lg" className="w-full font-semibold text-white sm:w-auto">
+          <Button type="submit" size="md" className="w-full text-white sm:w-auto">
             {content.submitButton}
           </Button>
         </form>

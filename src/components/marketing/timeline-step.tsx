@@ -3,6 +3,7 @@
 import { type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
 
 export interface TimelineStepProps {
   step: number;
@@ -49,8 +50,8 @@ function TimelineStep({
       >
         <span className="hud-corner left-2 top-2 border-l border-t" />
         <span className="hud-corner right-2 top-2 border-r border-t" />
-        <h3 className="font-heading text-body-md font-bold text-foreground dark:text-white sm:text-h4">{title}</h3>
-        <p className="mt-2 max-w-md text-body-sm text-muted-foreground leading-relaxed dark:text-slate-400">
+        <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>{title}</h3>
+        <p className={cn("mt-2 max-w-md", BODY_MUTED)}>
           {description}
         </p>
       </motion.div>

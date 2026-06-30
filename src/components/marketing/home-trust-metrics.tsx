@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Activity, Cpu, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { HEADING_DISPLAY, SECTION_EYEBROW, SECTION_META, SECTION_TITLE, SUBSECTION_TITLE } from "@/lib/typography";
 
 type MetricConfig = {
   code: string;
@@ -153,8 +154,8 @@ function HudMetricCard({
               <Icon className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-hud text-[10px] uppercase text-indigo-600 dark:text-cyan-400/80">{metric.code}</p>
-              <p className="font-heading text-sm font-bold uppercase tracking-wider text-foreground dark:text-white/90">
+              <p className={cn(SECTION_META, "text-indigo-600 dark:text-cyan-400/80")}>{metric.code}</p>
+              <p className={cn(HEADING_DISPLAY, SUBSECTION_TITLE, "uppercase tracking-wider")}>
                 {metric.label}
               </p>
             </div>
@@ -184,7 +185,7 @@ function HudMetricCard({
           </span>
         </motion.p>
 
-        <p className="relative mt-2 font-hud text-[10px] uppercase tracking-[0.14em] text-muted-foreground dark:text-slate-400">
+        <p className={cn("relative mt-2", SECTION_META)}>
           {metric.detail}
         </p>
 
@@ -228,14 +229,14 @@ function HomeTrustMetrics() {
               animate={reduceMotion ? undefined : { scale: [1, 1.4, 1], opacity: [1, 0.4, 1] }}
               transition={{ duration: 1.4, repeat: Infinity }}
             />
-            <span className="font-hud text-[11px] uppercase tracking-[0.28em] text-indigo-600 dark:text-cyan-400/80">
+            <span className={SECTION_EYEBROW}>
               System telemetry
             </span>
           </div>
-          <h2 className="font-heading text-display-lg font-extrabold uppercase tracking-wide text-foreground dark:text-white">
+          <h2 className={cn(HEADING_DISPLAY, SECTION_TITLE)}>
             Real-Time Service Matrix
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl font-hud text-sm uppercase tracking-[0.12em] text-muted-foreground dark:text-slate-400">
+          <p className={cn("mx-auto mt-3 max-w-2xl", SECTION_META)}>
             Live grading infrastructure metrics · auto-indexed
           </p>
         </div>

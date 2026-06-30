@@ -7,8 +7,10 @@ import { DealerApplicationForm } from "@/components/marketing/dealer-application
 import { CTABand } from "@/components/marketing/cta-band";
 import { Section } from "@/components/ui/section";
 import { dealerProgramPage } from "@/data/site-content";
+import { PAGE_LEAD } from "@/lib/typography";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: dealerProgramPage.meta.title,
@@ -39,7 +41,7 @@ export default function DealerProgramPage() {
           <SectionIntro align="left" title={content.benefits.title} />
           <Checklist items={content.benefits.items.map((text) => ({ text }))} />
         </div>
-        <p className="mx-auto mt-10 max-w-2xl text-center text-body-lg text-muted">
+        <p className={cn("mx-auto mt-10 max-w-2xl text-center", PAGE_LEAD)}>
           {content.tagline}
         </p>
       </Section>
@@ -58,7 +60,7 @@ export default function DealerProgramPage() {
         title="Apply For Dealer Program"
         description="Tell us about your business and we'll be in touch."
         actions={
-          <Link href="#dealer-form" className={buttonVariants({ variant: "light", size: "lg", className: "font-semibold" })}>
+          <Link href="#dealer-form" className={buttonVariants({ variant: "light", size: "md" })}>
             Apply For Dealer Program
           </Link>
         }

@@ -68,14 +68,14 @@ function MobileNav({ open, onClose, navItems }: MobileNavProps) {
           <Link
             href={navigation.login.href}
             onClick={onClose}
-            className={buttonVariants({ variant: "outline" })}
+            className={buttonVariants({ variant: "outline", size: "md" })}
           >
             {navigation.login.label}
           </Link>
           <Link
             href={navigation.submitCards.href}
             onClick={onClose}
-            className={cn(buttonVariants({ variant: "primary" }), "font-semibold text-white")}
+            className={cn(buttonVariants({ variant: "primary", size: "md" }), "text-white")}
           >
             {navigation.submitCards.label}
           </Link>

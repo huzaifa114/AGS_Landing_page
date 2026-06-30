@@ -9,6 +9,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED, HEADING_DISPLAY, SECTION_EYEBROW, SECTION_TITLE } from "@/lib/typography";
 
 export interface StickyStackItem {
   title: string;
@@ -47,12 +48,12 @@ function StickyStackSection({ items, header, className }: StickyStackSectionProp
               <span className="hud-corner left-3 top-3 border-l-2 border-t-2" aria-hidden="true" />
               <span className="hud-corner right-3 top-3 border-r-2 border-t-2" aria-hidden="true" />
               {item.eyebrow && (
-                <p className="font-hud text-caption font-bold uppercase tracking-[0.2em] text-primary dark:text-cyan-400">
+                <p className={SECTION_EYEBROW}>
                   {item.eyebrow}
                 </p>
               )}
-              <h2 className="mt-2 font-heading text-h1 font-extrabold text-foreground dark:text-white">{item.title}</h2>
-              <p className="mt-3 text-h4 text-muted-foreground dark:text-slate-400 leading-relaxed">{item.description}</p>
+              <h2 className={cn("mt-2", HEADING_DISPLAY, SECTION_TITLE)}>{item.title}</h2>
+              <p className={cn("mt-3", BODY_MUTED)}>{item.description}</p>
               {item.accent}
             </div>
           ))}
@@ -153,14 +154,14 @@ function StickyStackPanel({
         <span className="hud-corner right-3 top-3 border-r-2 border-t-2" aria-hidden="true" />
         <div className="relative">
           {item.eyebrow && (
-            <p className="font-hud text-caption font-bold uppercase tracking-[0.2em] text-primary dark:text-cyan-400">
+            <p className={SECTION_EYEBROW}>
               {item.eyebrow}
             </p>
           )}
-          <h2 className="mt-2 font-heading text-h1 font-extrabold tracking-tight text-foreground dark:text-white sm:text-display-lg">
+          <h2 className={cn("mt-2", HEADING_DISPLAY, SECTION_TITLE)}>
             {item.title}
           </h2>
-          <p className="mt-3 max-w-xl text-body-sm font-normal leading-relaxed text-muted-foreground dark:text-slate-400">
+          <p className={cn("mt-3 max-w-xl", BODY_MUTED)}>
             {item.description}
           </p>
           {item.accent}

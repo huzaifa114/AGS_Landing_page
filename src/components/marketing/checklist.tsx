@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED } from "@/lib/typography";
 
 export interface ChecklistItem {
   text: string;
@@ -27,7 +28,7 @@ function Checklist({ items, className }: ChecklistProps) {
               {item.text}
             </p>
             {item.description && (
-              <p className="mt-0.5 text-body-sm text-muted">
+              <p className={cn("mt-0.5", BODY_MUTED)}>
                 {item.description}
               </p>
             )}

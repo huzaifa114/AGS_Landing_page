@@ -75,7 +75,7 @@ export default function FAQPage() {
         title="Still have questions?"
         description="Submit your cards or contact our team for more information."
         actions={
-          <Link href="/submit-cards" className={buttonVariants({ size: "lg" })}>
+          <Link href="/submit-cards" className={buttonVariants({ size: "md" })}>
             Submit Cards
           </Link>
         }

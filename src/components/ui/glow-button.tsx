@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export interface GlowButtonProps {
   href: string;
@@ -17,16 +18,13 @@ function GlowButton({
   children,
   className,
   variant = "primary",
-  size = "lg",
+  size = "md",
 }: GlowButtonProps) {
-  const sizeClass =
-    size === "lg" ? "px-8 py-3 text-body-md" : "px-6 py-2.5 text-body-sm";
-
   return (
     <Link
       href={href}
       className={cn(
-        "group relative inline-flex overflow-hidden rounded-xl p-[1.5px] font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]",
+        "group relative inline-flex overflow-hidden rounded-xl p-[1.5px] transition-transform hover:scale-[1.02] active:scale-[0.98]",
         className
       )}
     >
@@ -39,11 +37,12 @@ function GlowButton({
       />
       <span
         className={cn(
-          "relative z-10 inline-flex w-full items-center justify-center gap-2 rounded-[10px]",
-          sizeClass,
-          variant === "primary"
-            ? "bg-primary text-white group-hover:bg-primary-hover"
-            : "border border-border/50 bg-white/90 text-foreground backdrop-blur-md group-hover:bg-white dark:bg-surface dark:group-hover:bg-surface-muted"
+          buttonVariants({
+            variant: variant === "primary" ? "primary" : "outline",
+            size,
+            className: "relative z-10 w-full rounded-[10px]",
+          }),
+          variant === "primary" && "text-white group-hover:bg-primary-hover"
         )}
       >
         {children}

@@ -5,7 +5,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AmbientHeroBackground } from "@/components/marketing/ambient-hero-background";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
-import { PAGE_HERO_TITLE, PAGE_LEAD, SECTION_EYEBROW } from "@/lib/typography";
+import { PAGE_HERO_TITLE, PAGE_LEAD, SECTION_EYEBROW, HEADING_DISPLAY } from "@/lib/typography";
+import { formatPageHeroTitle } from "@/components/marketing/page-hero-title";
 
 export interface HeroShellProps {
   eyebrow?: string;
@@ -67,10 +68,7 @@ function HeroShell({
             {eyebrow && (
               <motion.p
                 {...fade(0)}
-                className={cn(
-                  "font-hud font-bold uppercase tracking-[0.24em] text-primary dark:text-cyan-400",
-                  SECTION_EYEBROW
-                )}
+                className={cn(SECTION_EYEBROW)}
               >
                 {eyebrow}
               </motion.p>
@@ -78,19 +76,19 @@ function HeroShell({
             <motion.h1
               {...fade(eyebrow ? 0.06 : 0)}
               className={cn(
-                "font-heading font-extrabold leading-[1.06] tracking-tight text-foreground dark:text-white",
+                HEADING_DISPLAY,
                 PAGE_HERO_TITLE,
                 isCenter && "text-balance"
               )}
             >
-              {title}
+              {formatPageHeroTitle(title)}
             </motion.h1>
             {description && (
               <motion.p
                 {...fade(eyebrow ? 0.12 : 0.08)}
                 className={cn(
                   PAGE_LEAD,
-                  "max-w-2xl text-muted-foreground dark:text-slate-300",
+                  "max-w-2xl",
                   isCenter && "mx-auto"
                 )}
               >

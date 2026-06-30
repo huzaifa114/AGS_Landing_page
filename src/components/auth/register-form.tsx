@@ -59,7 +59,7 @@ function RegisterForm() {
       footer={
         <>
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-primary hover:underline">
+          <Link href="/register" className="font-semibold text-primary hover:underline">
             Sign in
           </Link>
         </>
@@ -111,7 +111,7 @@ function RegisterForm() {
           error={fieldError("confirmPassword")}
           {...register("confirmPassword")}
         />
-        <Button type="submit" size="lg" loading={loading} className="w-full">
+        <Button type="submit" size="md" loading={loading} className="w-full">
           Create Account
         </Button>
       </form>

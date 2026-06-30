@@ -12,6 +12,8 @@ import { StaggerItem, StaggerReveal } from "@/components/motion/stagger-reveal";
 import { Section } from "@/components/ui/section";
 import { buttonVariants } from "@/components/ui/button";
 import { technologyPage } from "@/data/site-content";
+import { BODY_MUTED, BODY_TEXT } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 const processIcons = [Workflow, Camera, Layers];
 
@@ -37,7 +39,7 @@ export default function TechnologyPage() {
           <SectionIntro title={content.coreTechnology.title} />
         </AnimatedBlock>
         <AnimatedBlock delay={0.08}>
-          <ul className="mx-auto mt-6 max-w-3xl space-y-2 text-body-sm text-muted">
+          <ul className={cn("mx-auto mt-6 max-w-3xl space-y-2", BODY_MUTED)}>
             {content.coreTechnology.principles.map((line) => (
               <li key={line} className="leading-relaxed">
                 {line}
@@ -76,14 +78,14 @@ export default function TechnologyPage() {
 
       <Section spacing="md">
         <AnimatedBlock>
-          <div className="mx-auto max-w-3xl space-y-4 text-body-sm text-muted leading-relaxed">
+          <div className={cn("mx-auto max-w-3xl space-y-4", BODY_MUTED)}>
             <SectionIntro align="left" title={content.whyTech.title} />
             {content.whyTech.paragraphs.map((paragraph, index) => (
               <p
                 key={paragraph}
                 className={
                   index === content.whyTech.paragraphs.length - 1
-                    ? "font-semibold text-foreground"
+                    ? cn(BODY_TEXT, "font-semibold")
                     : undefined
                 }
               >
@@ -101,7 +103,7 @@ export default function TechnologyPage() {
           actions={
             <Link
               href="/digital-reports"
-              className={buttonVariants({ size: "lg", className: "font-semibold text-white" })}
+              className={buttonVariants({ size: "md", className: "text-white" })}
             >
               {content.cta.button}
             </Link>

@@ -3,6 +3,7 @@
 import { type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { BODY_MUTED, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
 
 export interface AnimatedFeatureCardProps {
   icon: ReactNode;
@@ -67,10 +68,10 @@ function AnimatedFeatureCard({
             {icon}
           </motion.div>
           <div className="min-w-0">
-            <h3 className="font-heading text-body-md font-bold leading-snug text-foreground sm:text-h4">
+            <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>
               {title}
             </h3>
-            <p className="mt-1.5 text-body-sm text-muted-foreground leading-relaxed dark:text-slate-400">{description}</p>
+            <p className={cn("mt-1.5", BODY_MUTED)}>{description}</p>
           </div>
         </div>
       </motion.div>

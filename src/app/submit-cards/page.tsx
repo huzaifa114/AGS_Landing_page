@@ -36,7 +36,7 @@ export default function SubmitCardsPage() {
         actions={
           <Link
             href="/login?callbackUrl=/submit-cards"
-            className={buttonVariants({ variant: "light", size: "lg", className: "font-semibold" })}
+            className={buttonVariants({ variant: "light", size: "md" })}
           >
             {content.cta}
           </Link>

@@ -10,6 +10,8 @@ import { AnimatedBlock } from "@/components/motion/animated-block";
 import { Section } from "@/components/ui/section";
 import { buttonVariants } from "@/components/ui/button";
 import { whyWhiteWhalePage } from "@/data/site-content";
+import { BODY_MUTED, BODY_TEXT } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 const beliefIcons = [Eye, Shield, Clock, DollarSign];
 
@@ -35,12 +37,12 @@ export default function WhyWhiteWhalePage() {
           <SectionIntro title={content.exists.title} description={content.exists.description} />
         </AnimatedBlock>
         <AnimatedBlock delay={0.08}>
-          <div className="mx-auto mt-6 max-w-3xl space-y-4 text-body-sm text-muted leading-relaxed">
+          <div className={cn("mx-auto mt-6 max-w-3xl space-y-4", BODY_MUTED)}>
             {content.intro.map((paragraph, index) => (
               <p
                 key={paragraph}
                 className={
-                  index === content.intro.length - 1 ? "text-body-md font-bold text-foreground" : undefined
+                  index === content.intro.length - 1 ? cn(BODY_TEXT, "font-semibold") : undefined
                 }
               >
                 {paragraph}
@@ -89,7 +91,7 @@ export default function WhyWhiteWhalePage() {
           actions={
             <Link
               href="/submit-cards"
-              className={buttonVariants({ variant: "light", size: "lg", className: "font-semibold" })}
+              className={buttonVariants({ variant: "light", size: "md" })}
             >
               {content.cta.button}
             </Link>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import { BODY_TEXT } from "@/lib/typography";
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -33,7 +34,7 @@ function ContactForm() {
     return (
       <Card className="ai-console border-border/80 shadow-premium">
         <CardContent className="p-8 text-center">
-          <p className="text-body-md font-medium text-foreground">
+          <p className={BODY_TEXT}>
             Thanks. Contact form delivery will be connected in the backend phase.
           </p>
           <Button
@@ -83,7 +84,7 @@ function ContactForm() {
             error={errors.message}
             required
           />
-          <Button type="submit" size="lg" className="w-full sm:w-auto">
+          <Button type="submit" size="md" className="w-full sm:w-auto">
             Send Message
           </Button>
         </form>
