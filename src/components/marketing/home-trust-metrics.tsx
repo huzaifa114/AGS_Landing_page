@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Activity, Cpu, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { HEADING_DISPLAY, SECTION_EYEBROW, SECTION_META, SECTION_TITLE, SUBSECTION_TITLE } from "@/lib/typography";
+import { SECTION_EYEBROW, SECTION_META, SECTION_TITLE, HEADING_DISPLAY } from "@/lib/typography";
 
 type MetricConfig = {
   code: string;
@@ -127,11 +127,11 @@ function HudMetricCard({
       initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.96 }}
       animate={active ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="hud-panel group relative rounded-2xl p-[1px]"
+      className="hud-panel group relative h-full rounded-2xl p-[1px]"
     >
       <div
         className={cn(
-          "relative h-full overflow-hidden rounded-[calc(1rem-1px)] bg-white bg-gradient-to-br px-4 py-5 dark:bg-transparent sm:px-5 sm:py-6",
+          "relative flex h-full min-h-[248px] flex-col overflow-hidden rounded-[calc(1rem-1px)] bg-white bg-gradient-to-br px-4 py-5 dark:bg-transparent sm:min-h-[260px] sm:px-5 sm:py-6",
           metric.accent
         )}
       >
@@ -148,21 +148,21 @@ function HudMetricCard({
           />
         )}
 
-        <div className="relative flex items-start justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-600 shadow-sm dark:border-cyan-400/30 dark:bg-cyan-500/10 dark:text-cyan-300 dark:shadow-[0_0_20px_rgb(34_211_238/0.2)]">
+        <div className="relative flex min-h-[4.5rem] items-start justify-between gap-2">
+          <div className="flex min-w-0 flex-1 items-start gap-2.5">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-600 shadow-sm dark:border-cyan-400/30 dark:bg-cyan-500/10 dark:text-cyan-300 dark:shadow-[0_0_20px_rgb(34_211_238/0.2)]">
               <Icon className="h-4 w-4" />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className={cn(SECTION_META, "text-indigo-600 dark:text-cyan-400/80")}>{metric.code}</p>
-              <p className={cn(HEADING_DISPLAY, SUBSECTION_TITLE, "uppercase tracking-wider")}>
+              <p className="mt-0.5 min-h-[2.5rem] line-clamp-2 text-[11px] font-bold uppercase leading-tight tracking-wider text-foreground dark:text-white/90">
                 {metric.label}
               </p>
             </div>
           </div>
 
-          {metric.kind === "live" && (
-            <span className="inline-flex items-center gap-1.5 rounded border border-emerald-300 bg-emerald-50 px-2 py-0.5 font-hud text-[9px] uppercase text-emerald-700 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300">
+          {metric.kind === "live" ? (
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded border border-emerald-300 bg-emerald-50 px-2 py-0.5 font-hud text-[9px] uppercase text-emerald-700 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300">
               <motion.span
                 className="h-1.5 w-1.5 rounded-full bg-emerald-400"
                 animate={reduceMotion ? undefined : { opacity: [1, 0.2, 1] }}
@@ -170,12 +170,14 @@ function HudMetricCard({
               />
               Live
             </span>
+          ) : (
+            <span className="h-6 w-[52px] shrink-0" aria-hidden="true" />
           )}
         </div>
 
         <motion.p
           key={display}
-          className="relative mt-5 font-grade text-4xl font-extrabold tabular-nums tracking-wide text-foreground dark:text-white sm:text-5xl"
+          className="relative mt-5 min-h-[3rem] font-grade text-4xl font-extrabold tabular-nums leading-none tracking-wide text-foreground dark:text-white sm:min-h-[3.25rem] sm:text-5xl"
           initial={reduceMotion ? false : { opacity: 0.5, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
@@ -185,11 +187,11 @@ function HudMetricCard({
           </span>
         </motion.p>
 
-        <p className={cn("relative mt-2", SECTION_META)}>
+        <p className={cn("relative mt-2 min-h-[2.25rem] line-clamp-2", SECTION_META)}>
           {metric.detail}
         </p>
 
-        <div className="relative mt-4 flex gap-1">
+        <div className="relative mt-auto flex gap-1 pt-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <motion.div
               key={i}
@@ -241,7 +243,7 @@ function HomeTrustMetrics() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {METRICS.map((metric, index) => (
             <HudMetricCard key={metric.code} metric={metric} index={index} active={inView} />
           ))}
