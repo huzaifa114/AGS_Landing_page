@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat, Orbitron, Share_Tech_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { PageLoader } from "@/components/motion/page-loader";
 import { brand } from "@/data/site-content";
 import "./globals.css";
 
@@ -55,7 +56,10 @@ export default function RootLayout({
         className="min-h-screen bg-background font-sans antialiased"
         suppressHydrationWarning
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <PageLoader />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ import { TrustBullets } from "@/components/marketing/trust-bullets";
 import { HeroCardStack } from "@/components/marketing/hero-card-stack";
 import { AnimatedFeatureCard } from "@/components/marketing/animated-feature-card";
 import { GlowingCardPair } from "@/components/marketing/glowing-card-pair";
-import { StickyStackSection } from "@/components/marketing/sticky-stack-section";
+import { StandardHorizontalSection } from "@/components/marketing/standard-horizontal-section";
 import { SectionIntro } from "@/components/marketing/section-intro";
 import { TimelineStep } from "@/components/marketing/timeline-step";
 import { Checklist } from "@/components/marketing/checklist";
@@ -37,18 +37,30 @@ const WHITE_WHALE_STACK = [
     title: "Grading You Can Repeat",
     description:
       "Controlled imaging workflows and standardized evaluation help deliver a more consistent result — card after card, submission after submission.",
+    popups: [
+      { label: "Repeatable", position: "top-right" as const },
+      { label: "Same workflow", position: "bottom-left" as const },
+    ],
   },
   {
     eyebrow: "Commitment 02",
     title: "See What Shaped Your Grade",
     description:
       "Every slab ships with a digital report that documents the condition detail behind the final grade — not just a number on a label.",
+    popups: [
+      { label: "Digital report", position: "top-left" as const },
+      { label: "Full detail", position: "bottom-right" as const },
+    ],
   },
   {
     eyebrow: "Commitment 03",
     title: "Back In Your Hands Fast",
     description:
       "White Whale targets a 72-hour turnaround after receipt so your cards spend less time waiting and more time in the market.",
+    popups: [
+      { label: "72h target", position: "top-right" as const },
+      { label: "Fast return", position: "bottom-left" as const },
+    ],
     accent: (
       <div className="mt-6 flex items-baseline gap-3">
         <span className="font-grade text-4xl font-extrabold text-primary dark:text-cyan-300">72</span>
@@ -61,6 +73,10 @@ const WHITE_WHALE_STACK = [
     title: "One Clear Price",
     description:
       "$10 per card. No tier maze, no surprise upcharges. Subgrades available at $20 per card when you want deeper condition breakdown.",
+    popups: [
+      { label: "$10 / card", position: "top-left" as const },
+      { label: "No hidden fees", position: "top-right" as const },
+    ],
     accent: (
       <div className="mt-6 inline-flex rounded-2xl border-2 border-indigo-200 bg-indigo-50 px-6 py-4 dark:border-indigo-500/30 dark:bg-indigo-500/10">
         <div>
@@ -137,7 +153,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <StickyStackSection
+      <StandardHorizontalSection
         header={
           <SectionIntro
             eyebrow="Our Standard"
