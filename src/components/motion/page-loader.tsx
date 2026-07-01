@@ -6,6 +6,15 @@ const EKG_PATH =
   "M0 48 H72 L88 48 L98 18 L112 78 L126 48 L168 48 L178 22 L192 74 L206 48 L248 48 L258 28 L272 68 L286 48 H400";
 
 const MIN_VISIBLE_MS = 320;
+const LOADER_DONE_KEY = "ww-loader-done";
+
+function readLoaderDone(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    window.sessionStorage.getItem(LOADER_DONE_KEY) === "1" ||
+    document.documentElement.dataset.loaderDone === "true"
+  );
+}
 
 function PageLoader() {
   const [visible, setVisible] = useState(true);
@@ -14,7 +23,16 @@ function PageLoader() {
   useEffect(() => {
     const markLoaderDone = () => {
       document.documentElement.dataset.loaderDone = "true";
+      window.sessionStorage.setItem(LOADER_DONE_KEY, "1");
     };
+
+    if (readLoaderDone()) {
+      markLoaderDone();
+      setVisible(false);
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      return;
+    }
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) {
@@ -64,7 +82,7 @@ function PageLoader() {
 
   return (
     <div
-      className={`page-loader fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#060a14] ${exiting ? "page-loader-exit" : ""}`}
+      className={`page-loader fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#060a14] ${exiting ? "page-loader-exit pointer-events-none" : ""}`}
       aria-hidden="true"
     >
       <div

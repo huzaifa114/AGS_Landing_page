@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat, Orbitron, Share_Tech_Mono } from "next/font/google";
-import { StaticPageLoader } from "@/components/motion/static-page-loader";
+import { PageLoader } from "@/components/motion/page-loader";
 import { brand } from "@/data/site-content";
 import "./globals.css";
 
@@ -59,7 +59,7 @@ export default function RootLayout({
         className="min-h-screen bg-background font-sans antialiased"
         suppressHydrationWarning
       >
-        <StaticPageLoader />
+        <PageLoader />
         <div className="site-content">{children}</div>
       </body>
     </html>
