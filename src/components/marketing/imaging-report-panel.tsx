@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { CardImagingOverlay } from "@/components/marketing/card-imaging-overlay";
 import { sampleCardImages } from "@/data/site-content";
 import { cn } from "@/lib/utils";
-import { BODY_MUTED, BODY_TEXT, META_TEXT, SECTION_META, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
+import { BODY_MUTED, META_TEXT, SECTION_META, CARD_H3, GRADE_GRADIENT, MONO_DATA_SM, BODY_STRONG, PANEL_LABEL } from "@/lib/typography";
 
 type SubgradeKey = "centering" | "corners" | "edges" | "surface";
 type CardSide = "front" | "back";
@@ -115,8 +115,8 @@ function MetricCell({
 
   return (
     <div className="rounded-lg border border-border dark:border-white/10 bg-surface-muted dark:bg-black/30 px-2.5 py-2">
-      <dt className="text-[9px] font-semibold uppercase tracking-wide text-muted-foreground dark:text-slate-500">{label}</dt>
-      <dd className="mt-0.5 font-mono text-sm font-bold tabular-nums text-indigo-300">
+      <dt className={PANEL_LABEL}>{label}</dt>
+      <dd className={cn("mt-0.5 text-indigo-300", MONO_DATA_SM)}>
         {display}
         {suffix}
       </dd>
@@ -148,7 +148,7 @@ function ScoreRing({ value, active }: { value: number; active: boolean }) {
           transition={{ duration: reduceMotion ? 0 : 0.5, ease: "easeOut" }}
         />
       </svg>
-      <span className="font-mono text-sm font-bold text-foreground dark:text-white">{value.toFixed(1)}</span>
+      <span className={MONO_DATA_SM}>{value.toFixed(1)}</span>
     </div>
   );
 }
@@ -182,10 +182,10 @@ function SubgradeRow({
         <Icon className="h-4 w-4" />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground dark:text-slate-400">
+        <p className={PANEL_LABEL}>
           {item.label}
         </p>
-        <p className="font-mono text-base font-bold text-foreground dark:text-white">{item.value.toFixed(1)}</p>
+        <p className={MONO_DATA_SM}>{item.value.toFixed(1)}</p>
       </div>
       {isActive && <ScoreRing value={item.value} active={isActive} />}
     </motion.div>
@@ -254,8 +254,7 @@ function ImagingReportPanel({ className }: { className?: string }) {
           <p className={META_TEXT}>
             Digital Grading Report
           </p>
-          <h3 className={cn("mt-0.5", HEADING_DISPLAY, SUBSECTION_TITLE)}>Victor Wembanyama</h3>
-          <span className="font-mono text-xs text-muted-foreground dark:text-slate-500">WW-000001</span>
+          <h3 className={cn("mt-0.5", CARD_H3)}>Victor Wembanyama</h3>
         </div>
         <div className="text-right">
           <p className={cn(SECTION_META, "text-primary dark:text-cyan-400")}>
@@ -267,12 +266,12 @@ function ImagingReportPanel({ className }: { className?: string }) {
               animate={reduceMotion ? undefined : { scale: [1, 1.03, 1] }}
               transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             >
-              <p className="font-grade text-5xl font-extrabold leading-none tracking-wider text-transparent sm:text-6xl bg-gradient-to-br from-indigo-600 via-primary to-violet-600 bg-clip-text dark:from-cyan-300 dark:via-white dark:to-violet-300 dark:drop-shadow-[0_0_18px_rgb(56_189_248/0.45)]">
+              <p className={cn(GRADE_GRADIENT, "dark:drop-shadow-[0_0_18px_rgb(56_189_248/0.45)]")}>
                 9.0
               </p>
               <div className="pointer-events-none absolute -inset-2 rounded-lg bg-indigo-500/10 blur-md dark:bg-cyan-400/10" />
             </motion.div>
-            <span className="mt-1 font-hud text-[9px] uppercase tracking-[0.22em] text-violet-600/90 dark:text-violet-300/90">
+            <span className={cn(SECTION_META, "mt-1 text-violet-600/90 dark:text-violet-300/90")}>
               AI · Confidence Index
             </span>
           </div>
@@ -282,11 +281,11 @@ function ImagingReportPanel({ className }: { className?: string }) {
       <div className="relative grid gap-4 p-4 sm:p-5 lg:grid-cols-[1.05fr_1fr] lg:gap-5">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground dark:text-slate-300">
+            <div className={cn("flex items-center gap-1.5", BODY_STRONG, "text-muted-foreground dark:text-slate-300")}>
               <ScanLine className="h-3.5 w-3.5 text-indigo-400" />
               Imaging capture
               {autoPlay && inView && (
-                <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">
+                <span className={cn(META_TEXT, "ml-1 inline-flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-0.5 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300")}>
                   <motion.span
                     className="h-1 w-1 rounded-full bg-indigo-400"
                     animate={{ opacity: [1, 0.3, 1] }}
@@ -306,7 +305,8 @@ function ImagingReportPanel({ className }: { className?: string }) {
                     pauseAuto();
                   }}
                   className={cn(
-                    "rounded-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-colors",
+                    "rounded-md px-3 py-1 uppercase transition-colors",
+                    META_TEXT,
                     cardSide === side ? "bg-indigo-600 text-white" : "text-muted-foreground dark:text-slate-400"
                   )}
                 >
@@ -320,9 +320,9 @@ function ImagingReportPanel({ className }: { className?: string }) {
             <AnimatePresence mode="wait">
               <motion.div
                 key={cardSide}
-                initial={{ opacity: 0, filter: "blur(4px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, filter: "blur(4px)" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.35, ease }}
                 className="relative aspect-[2.5/3.5] overflow-hidden rounded-lg border border-indigo-500/30"
               >
@@ -339,10 +339,10 @@ function ImagingReportPanel({ className }: { className?: string }) {
           </div>
 
           <div className="rounded-xl border border-border dark:border-white/10 bg-surface-muted/80 dark:bg-white/[0.03] p-3">
-            <div className="mb-2 flex items-center gap-1.5 text-xs font-bold text-foreground dark:text-slate-200">
+            <p className={cn("mb-2 flex items-center gap-1.5", CARD_H3)}>
               <Cpu className="h-3.5 w-3.5 text-indigo-400" />
               Imaging metrics
-            </div>
+            </p>
             <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               {DATA_METRICS.map((m) => (
                 <MetricCell key={m.label} label={m.label} value={m.value} suffix={m.suffix} active={inView} />
@@ -354,7 +354,7 @@ function ImagingReportPanel({ className }: { className?: string }) {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>Condition Analytics</h4>
+              <h4 className={CARD_H3}>Condition Analytics</h4>
               <p className={cn("mt-0.5 capitalize", BODY_MUTED)}>
                 {cardSide} surface · auto-indexed
               </p>
@@ -387,11 +387,11 @@ function ImagingReportPanel({ className }: { className?: string }) {
               transition={{ duration: 0.3, ease }}
               className="overflow-hidden rounded-xl border border-indigo-500/30 bg-indigo-500/8 px-3 py-3"
             >
-              <div className="text-[10px] font-mono uppercase tracking-wide text-indigo-300">
+              <div className={cn(META_TEXT, "font-mono text-indigo-300")}>
                 {cardSide} · {signalText}
               </div>
               <p className={cn("mt-2", BODY_MUTED)}>
-                <span className="font-semibold text-foreground dark:text-white">{activeItem.label}</span>
+                <span className={BODY_STRONG}>{activeItem.label}</span>
                 {" — "}
                 {conditionText}
               </p>
@@ -408,14 +408,6 @@ function ImagingReportPanel({ className }: { className?: string }) {
                 )}
               />
             ))}
-          </div>
-
-          <div>
-            <p className={cn(BODY_TEXT, "font-semibold text-muted-foreground dark:text-slate-300")}>Certification</p>
-            <div className="mt-1.5 flex flex-wrap gap-1.5">
-              <Badge variant="premium">WW-000001</Badge>
-              <Badge variant="info">Verified Record</Badge>
-            </div>
           </div>
         </div>
       </div>

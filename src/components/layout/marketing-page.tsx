@@ -1,15 +1,15 @@
 import { type ReactNode } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { DeferredSiteFooter } from "@/components/layout/deferred-site-footer";
+import { DeferredScrollProgress } from "@/components/motion/deferred-scroll-progress";
 
 function MarketingPage({ children }: { children: ReactNode }) {
   return (
     <>
-      <ScrollProgress />
+      <DeferredScrollProgress />
       <SiteHeader />
       <main>{children}</main>
-      <SiteFooter />
+      <DeferredSiteFooter />
     </>
   );
 }

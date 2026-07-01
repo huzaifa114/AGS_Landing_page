@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat, Orbitron, Share_Tech_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/theme/theme-provider";
-import { PageLoader } from "@/components/motion/page-loader";
+import { StaticPageLoader } from "@/components/motion/static-page-loader";
 import { brand } from "@/data/site-content";
 import "./globals.css";
 
@@ -9,21 +8,24 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
-  display: "swap",
-  weight: ["600", "700", "800", "900"],
+  display: "optional",
+  weight: ["800"],
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-orbitron",
   display: "swap",
-  weight: ["600", "700", "800", "900"],
+  weight: ["700"],
+  preload: false,
 });
 
 const shareTechMono = Share_Tech_Mono({
@@ -31,6 +33,7 @@ const shareTechMono = Share_Tech_Mono({
   variable: "--font-share-tech",
   display: "swap",
   weight: "400",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -49,17 +52,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${montserrat.variable} ${orbitron.variable} ${shareTechMono.variable}`}
+      className={`dark ${inter.variable} ${montserrat.variable} ${orbitron.variable} ${shareTechMono.variable}`}
       suppressHydrationWarning
     >
       <body
         className="min-h-screen bg-background font-sans antialiased"
         suppressHydrationWarning
       >
-        <ThemeProvider>
-          <PageLoader />
-          {children}
-        </ThemeProvider>
+        <StaticPageLoader />
+        <div className="site-content">{children}</div>
       </body>
     </html>
   );

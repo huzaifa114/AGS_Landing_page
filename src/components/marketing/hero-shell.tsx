@@ -1,11 +1,15 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { LazyMotion, domAnimation, motion, useReducedMotion } from "framer-motion";
 import { AmbientHeroBackground } from "@/components/marketing/ambient-hero-background";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
-import { PAGE_HERO_TITLE, PAGE_LEAD, SECTION_EYEBROW, HEADING_DISPLAY } from "@/lib/typography";
+import {
+  PAGE_LEAD,
+  SECTION_EYEBROW,
+  PAGE_HERO_H1,
+} from "@/lib/typography";
 import { formatPageHeroTitle } from "@/components/marketing/page-hero-title";
 
 export interface HeroShellProps {
@@ -43,10 +47,13 @@ function HeroShell({
         };
 
   return (
+    <LazyMotion features={domAnimation} strict={false}>
     <section
       className={cn(
         "page-hero relative overflow-hidden",
-        "pt-5 pb-7 sm:pt-7 sm:pb-9 lg:pt-8 lg:pb-10",
+        media
+          ? "pt-5 pb-7 sm:pt-7 sm:pb-9 lg:pt-8 lg:pb-10"
+          : "page-hero-compact pt-5 pb-3 sm:pt-7 sm:pb-4 lg:pt-8 lg:pb-5",
         className
       )}
     >
@@ -75,11 +82,7 @@ function HeroShell({
             )}
             <motion.h1
               {...fade(eyebrow ? 0.06 : 0)}
-              className={cn(
-                HEADING_DISPLAY,
-                PAGE_HERO_TITLE,
-                isCenter && "text-balance"
-              )}
+              className={cn(PAGE_HERO_H1, isCenter && "text-balance")}
             >
               {formatPageHeroTitle(title)}
             </motion.h1>
@@ -122,6 +125,7 @@ function HeroShell({
         </div>
       </Container>
     </section>
+    </LazyMotion>
   );
 }
 

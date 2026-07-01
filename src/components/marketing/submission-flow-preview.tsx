@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { submitCardsPage } from "@/data/site-content";
 import { cn } from "@/lib/utils";
-import { BODY_MUTED, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
+import { BODY_MUTED, CARD_H3, META_TEXT } from "@/lib/typography";
 
 const stepIcons = [LogIn, Package, CheckCircle2, Truck, ShoppingCart, CheckCircle2];
 
@@ -46,8 +46,8 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-caption text-foreground">Step {String(index + 1).padStart(2, "0")}</p>
-                    <h3 className={cn("mt-1", HEADING_DISPLAY, SUBSECTION_TITLE)}>{step.title}</h3>
+                    <p className={cn(META_TEXT, "text-foreground")}>Step {String(index + 1).padStart(2, "0")}</p>
+                    <h3 className={cn("mt-1", CARD_H3)}>{step.title}</h3>
                     <p className={cn("mt-2", BODY_MUTED)}>
                       {step.description}
                     </p>
@@ -64,7 +64,7 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
           <span className="hud-corner left-2 top-2 border-l border-t" aria-hidden="true" />
           <span className="hud-corner right-2 top-2 border-r border-t" aria-hidden="true" />
           <CardContent className="p-6 sm:p-8">
-            <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>{content.included.title}</h3>
+            <h3 className={CARD_H3}>{content.included.title}</h3>
             <Checklist
               className="mt-6"
               items={content.included.items.map((text) => ({ text }))}
@@ -76,7 +76,7 @@ function SubmissionFlowPreview({ className }: SubmissionFlowPreviewProps) {
           <span className="hud-corner left-2 top-2 border-l border-t" aria-hidden="true" />
           <span className="hud-corner right-2 top-2 border-r border-t" aria-hidden="true" />
           <CardContent className="p-6 sm:p-8">
-            <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>Accepted payment methods</h3>
+            <h3 className={CARD_H3}>Accepted payment methods</h3>
             <p className={cn("mt-2", BODY_MUTED)}>
               Payment options shown for preview. Checkout is not active in this release.
             </p>

@@ -5,52 +5,58 @@ import { useEffect, useState } from "react";
 const EKG_PATH =
   "M0 48 H72 L88 48 L98 18 L112 78 L126 48 L168 48 L178 22 L192 74 L206 48 L248 48 L258 28 L272 68 L286 48 H400";
 
-const MIN_VISIBLE_MS = 720;
+const MIN_VISIBLE_MS = 320;
 
 function PageLoader() {
   const [visible, setVisible] = useState(true);
   const [exiting, setExiting] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    const markLoaderDone = () => {
+      document.documentElement.dataset.loaderDone = "true";
+    };
+
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) {
+      markLoaderDone();
       setVisible(false);
       return;
     }
 
     const started = performance.now();
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
-    let frame: number;
-    const tick = (ts: number) => {
-      const elapsed = ts - started;
-      setProgress(Math.min(92, (elapsed / 1200) * 92));
-      if (elapsed < 1200) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
+    let dismissed = false;
 
     const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
+
       const elapsed = performance.now() - started;
       const wait = Math.max(0, MIN_VISIBLE_MS - elapsed);
 
       window.setTimeout(() => {
-        setProgress(100);
         setExiting(true);
         window.setTimeout(() => {
           setVisible(false);
           document.body.style.overflow = "";
-        }, 450);
+          document.documentElement.style.overflow = "";
+          markLoaderDone();
+        }, 300);
       }, wait);
     };
 
-    if (document.readyState === "complete") dismiss();
-    else window.addEventListener("load", dismiss, { once: true });
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      dismiss();
+    } else {
+      document.addEventListener("DOMContentLoaded", dismiss, { once: true });
+    }
 
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("load", dismiss);
+      document.removeEventListener("DOMContentLoaded", dismiss);
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, []);
 
@@ -122,10 +128,7 @@ function PageLoader() {
       </p>
 
       <div className="mt-4 h-px w-40 overflow-hidden rounded-full bg-white/8">
-        <div
-          className="h-full origin-left bg-gradient-to-r from-indigo-500 via-cyan-400 to-violet-500 shadow-[0_0_12px_rgb(56_189_248/0.8)] transition-transform duration-300 ease-out"
-          style={{ transform: `scaleX(${progress / 100})` }}
-        />
+        <div className="page-loader-progress h-full origin-left bg-gradient-to-r from-indigo-500 via-cyan-400 to-violet-500 shadow-[0_0_12px_rgb(56_189_248/0.8)]" />
       </div>
     </div>
   );

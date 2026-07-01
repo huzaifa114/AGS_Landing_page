@@ -27,9 +27,9 @@ export default function VerifyCertificationPage() {
         description={verifyPage.hero.description}
       />
 
-      <Section spacing="lg" id="verify-search">
-        <div className="mx-auto max-w-xl">
-          <CertificationSearch />
+      <Section spacing="md" id="verify-search">
+        <div className="mx-auto max-w-md">
+          <CertificationSearch compact />
         </div>
       </Section>
 

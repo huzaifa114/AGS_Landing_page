@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Activity, Cpu, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SECTION_EYEBROW, SECTION_META, SECTION_TITLE, HEADING_DISPLAY } from "@/lib/typography";
+import { SECTION_EYEBROW, SECTION_META, SECTION_H2, GRADE_DISPLAY, META_TEXT, PANEL_TITLE } from "@/lib/typography";
 
 type MetricConfig = {
   code: string;
@@ -155,14 +155,14 @@ function HudMetricCard({
             </div>
             <div className="min-w-0">
               <p className={cn(SECTION_META, "text-indigo-600 dark:text-cyan-400/80")}>{metric.code}</p>
-              <p className="mt-0.5 min-h-[2.5rem] line-clamp-2 text-[11px] font-bold uppercase leading-tight tracking-wider text-foreground dark:text-white/90">
+              <p className={cn(PANEL_TITLE, "mt-0.5 min-h-[2.5rem] line-clamp-2 leading-tight")}>
                 {metric.label}
               </p>
             </div>
           </div>
 
           {metric.kind === "live" ? (
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded border border-emerald-300 bg-emerald-50 px-2 py-0.5 font-hud text-[9px] uppercase text-emerald-700 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300">
+            <span className={cn(META_TEXT, "inline-flex shrink-0 items-center gap-1.5 rounded border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-emerald-700 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300")}>
               <motion.span
                 className="h-1.5 w-1.5 rounded-full bg-emerald-400"
                 animate={reduceMotion ? undefined : { opacity: [1, 0.2, 1] }}
@@ -177,7 +177,10 @@ function HudMetricCard({
 
         <motion.p
           key={display}
-          className="relative mt-5 min-h-[3rem] font-grade text-4xl font-extrabold tabular-nums leading-none tracking-wide text-foreground dark:text-white sm:min-h-[3.25rem] sm:text-5xl"
+          className={cn(
+            "relative mt-5 min-h-[3rem] tabular-nums sm:min-h-[3.25rem]",
+            GRADE_DISPLAY
+          )}
           initial={reduceMotion ? false : { opacity: 0.5, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
@@ -227,7 +230,7 @@ function HomeTrustMetrics() {
           <span className={cn("mb-3 block", SECTION_EYEBROW)}>
             System telemetry
           </span>
-          <h2 className={cn(HEADING_DISPLAY, SECTION_TITLE)}>
+          <h2 className={SECTION_H2}>
             Real-Time Service Matrix
           </h2>
           <p className={cn("mx-auto mt-3 max-w-2xl", SECTION_META)}>

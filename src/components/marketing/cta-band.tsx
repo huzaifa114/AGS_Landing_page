@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
-import { HEADING_DISPLAY, SECTION_TITLE, PAGE_LEAD } from "@/lib/typography";
+import { SECTION_H2, PAGE_LEAD } from "@/lib/typography";
 
 export interface CTABandProps {
   title: string;
@@ -44,8 +44,7 @@ function CTABand({
           <div className="max-w-xl">
             <h2
               className={cn(
-                HEADING_DISPLAY,
-                SECTION_TITLE,
+                SECTION_H2,
                 isPremium ? "text-primary-foreground" : undefined
               )}
             >

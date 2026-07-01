@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { META_TEXT, BODY_MUTED } from "@/lib/typography";
+import { META_TEXT, PRICE_DISPLAY, BODY_MUTED, BODY_TEXT } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
 export interface PricingHeroCardProps {
@@ -45,17 +45,18 @@ function PricingHeroCard({
         <p className={cn(META_TEXT, "text-muted-foreground dark:text-slate-400")}>{label}</p>
 
         <div className="mt-5 flex items-baseline gap-2">
-          <span className="font-heading text-5xl font-extrabold tracking-tight text-foreground dark:text-white sm:text-6xl">
+          <span className={PRICE_DISPLAY}>
             {priceValue}
           </span>
-          <span className={cn(BODY_MUTED, "text-base sm:text-lg")}>/ card</span>
+          <span className={BODY_MUTED}>/ card</span>
         </div>
 
         <p className={cn("mt-4", BODY_MUTED)}>{turnaround}</p>
 
         <p
           className={cn(
-            "mt-6 rounded-full border border-indigo-200/80 bg-white/95 px-5 py-3.5 text-body-md text-foreground",
+            "mt-6 rounded-full border border-indigo-200/80 bg-white/95 px-5 py-3.5",
+            BODY_TEXT,
             "dark:border-white/12 dark:bg-white/[0.06] dark:text-slate-200"
           )}
         >

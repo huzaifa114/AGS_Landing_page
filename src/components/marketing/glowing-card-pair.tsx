@@ -190,7 +190,14 @@ function GlowingCardPair({ grade = "9.0", className, autoFlip = false }: Glowing
                   }}
                   className="relative aspect-[2.5/3.5] overflow-hidden rounded-xl border border-indigo-500/30"
                 >
-                  <Image src={face.src} alt={face.alt} fill className="object-cover" sizes="200px" />
+                  <Image
+                    src={face.src}
+                    alt={face.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 160px, 200px"
+                    quality={65}
+                  />
                   <CardImagingOverlay active variant="pair" />
                   {face.side === "front" && (
                     <div className="absolute right-2 top-2">

@@ -1,53 +1,70 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
-import { AmbientMotionCanvas } from "@/components/marketing/ambient-motion-canvas";
+
+const AmbientMotionCanvas = dynamic(
+  () =>
+    import("@/components/marketing/ambient-motion-canvas").then(
+      (m) => m.AmbientMotionCanvas
+    ),
+  { ssr: false }
+);
 
 export interface AmbientHeroBackgroundProps {
   className?: string;
-  /** Optional MP4 — if missing, built-in motion canvas is used */
-  videoSrc?: string;
 }
 
-function AmbientHeroBackground({
-  className,
-  videoSrc = "/videos/hero-bg.mp4",
-}: AmbientHeroBackgroundProps) {
-  const [videoReady, setVideoReady] = useState(false);
+function AmbientHeroBackground({ className }: AmbientHeroBackgroundProps) {
+  const [canvasReady, setCanvasReady] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
+    let idleId = 0;
+    let timeoutId = 0;
+    let observer: MutationObserver | null = null;
 
-    fetch(videoSrc, { method: "HEAD" })
-      .then((res) => {
-        if (!cancelled) setVideoReady(res.ok);
-      })
-      .catch(() => {
-        if (!cancelled) setVideoReady(false);
+    const mountCanvas = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(() => setCanvasReady(true), {
+          timeout: 2500,
+        });
+      } else {
+        timeoutId = window.setTimeout(() => setCanvasReady(true), 600);
+      }
+    };
+
+    const start = () => {
+      if (document.documentElement.dataset.loaderDone === "true") {
+        mountCanvas();
+        return;
+      }
+
+      observer = new MutationObserver(() => {
+        if (document.documentElement.dataset.loaderDone === "true") {
+          observer?.disconnect();
+          observer = null;
+          mountCanvas();
+        }
       });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-loader-done"],
+      });
+    };
+
+    start();
 
     return () => {
-      cancelled = true;
+      observer?.disconnect();
+      if (idleId) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
     };
-  }, [videoSrc]);
+  }, []);
 
   return (
     <div className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)} aria-hidden="true">
-      {/* Built-in cinematic motion — no video file required */}
-      {!videoReady && <AmbientMotionCanvas />}
-
-      {videoReady && (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover opacity-40 dark:opacity-25"
-          src={videoSrc}
-        />
-      )}
+      {canvasReady && <AmbientMotionCanvas />}
 
       <div className="ambient-mesh absolute inset-0" />
       <div className="ambient-orb ambient-orb-a absolute -left-24 top-10 h-72 w-72 rounded-full bg-indigo-300/30 blur-3xl dark:bg-indigo-500/20" />

@@ -4,6 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { StatusPill } from "@/components/ui/status-pill";
 import { CertificationImagePlaceholder } from "@/components/certifications/certification-image-placeholder";
 import type { CertificationRecord } from "@/lib/certifications/types";
+import {
+  BODY_MUTED,
+  BODY_TEXT,
+  CARD_H3,
+  GRADE_STAT,
+  META_TEXT,
+} from "@/lib/typography";
 
 export interface VerificationResultCardProps {
   certification: CertificationRecord;
@@ -31,10 +38,10 @@ function VerificationResultCard({
               <BadgeCheck className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-caption text-muted-foreground">
+              <p className={META_TEXT}>
                 Verified Certification
               </p>
-              <p className="font-mono text-body-md font-semibold">
+              <p className={cn("font-mono", BODY_TEXT, "font-semibold")}>
                 {certification.certificationNumber}
               </p>
             </div>
@@ -54,16 +61,16 @@ function VerificationResultCard({
           <div className="flex flex-col gap-8">
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
-                <p className="text-caption text-muted-foreground">Grade</p>
-                <p className="mt-2 text-h2 font-semibold text-primary">
+                <p className={META_TEXT}>Grade</p>
+                <p className={cn("mt-2", GRADE_STAT, "text-primary")}>
                   {certification.grade}
                 </p>
               </div>
               <div>
-                <p className="text-caption text-muted-foreground">
+                <p className={META_TEXT}>
                   Grading Date
                 </p>
-                <p className="mt-2 text-body-md font-medium">
+                <p className={cn("mt-2", BODY_TEXT, "font-medium")}>
                   {certification.gradingDate.toLocaleDateString("en-US", {
                     month: "long",
                     day: "numeric",
@@ -74,39 +81,39 @@ function VerificationResultCard({
             </div>
 
             <div className="rounded-2xl border border-border/60 bg-surface-muted/30 p-6">
-              <p className="text-caption text-muted-foreground">Card Details</p>
-              <h2 className="mt-2 text-h4 font-semibold">
+              <p className={META_TEXT}>Card Details</p>
+              <h2 className={cn("mt-2", CARD_H3)}>
                 {certification.card.cardName}
               </h2>
               <dl className="mt-4 grid gap-3 sm:grid-cols-2">
                 {certification.card.year && (
                   <div>
-                    <dt className="text-body-sm text-muted">Year</dt>
-                    <dd className="text-body-md font-medium">
+                    <dt className={BODY_MUTED}>Year</dt>
+                    <dd className={cn(BODY_TEXT, "font-medium")}>
                       {certification.card.year}
                     </dd>
                   </div>
                 )}
                 {certification.card.setName && (
                   <div>
-                    <dt className="text-body-sm text-muted">Set</dt>
-                    <dd className="text-body-md font-medium">
+                    <dt className={BODY_MUTED}>Set</dt>
+                    <dd className={cn(BODY_TEXT, "font-medium")}>
                       {certification.card.setName}
                     </dd>
                   </div>
                 )}
                 {certification.card.playerName && (
                   <div>
-                    <dt className="text-body-sm text-muted">Player</dt>
-                    <dd className="text-body-md font-medium">
+                    <dt className={BODY_MUTED}>Player</dt>
+                    <dd className={cn(BODY_TEXT, "font-medium")}>
                       {certification.card.playerName}
                     </dd>
                   </div>
                 )}
                 {certification.card.cardNumber && (
                   <div>
-                    <dt className="text-body-sm text-muted">Card #</dt>
-                    <dd className="text-body-md font-medium">
+                    <dt className={BODY_MUTED}>Card #</dt>
+                    <dd className={cn(BODY_TEXT, "font-medium")}>
                       {certification.card.cardNumber}
                     </dd>
                   </div>
@@ -115,17 +122,17 @@ function VerificationResultCard({
             </div>
 
             <div>
-              <p className="text-caption text-muted-foreground">
+              <p className={META_TEXT}>
                 Submission Number
               </p>
-              <p className="mt-2 font-mono text-body-md font-medium">
+              <p className={cn("mt-2 font-mono", BODY_TEXT, "font-medium")}>
                 {certification.submissionNumber}
               </p>
             </div>
 
             <div className="flex items-start gap-3 rounded-2xl border border-success/20 bg-success-soft/40 p-5">
               <Shield className="mt-0.5 h-5 w-5 shrink-0 text-success" />
-              <p className="text-body-sm text-foreground">
+              <p className={BODY_TEXT}>
                 This certification record has been verified through White Whale.
               </p>
             </div>

@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { BODY_MUTED, HEADING_DISPLAY, SUBSECTION_TITLE } from "@/lib/typography";
+import { BODY_MUTED, CARD_H3 } from "@/lib/typography";
 
 export interface FeatureCardProps {
   icon?: ReactNode;
@@ -47,7 +47,7 @@ function FeatureCard({ icon, title, description, className }: FeatureCardProps) 
             </div>
           )}
           <div>
-            <h3 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>{title}</h3>
+            <h3 className={CARD_H3}>{title}</h3>
             <p className={cn("mt-2", BODY_MUTED)}>{description}</p>
           </div>
         </div>

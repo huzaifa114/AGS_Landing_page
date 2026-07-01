@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
 import {
   BODY_MUTED,
-  HEADING_DISPLAY,
   META_TEXT,
-  SUBSECTION_TITLE,
+  SECTION_H2,
 } from "@/lib/typography";
 
 export interface LegalSection {
@@ -37,7 +36,7 @@ function LegalDocument({ lastUpdated, sections, footerNote, className }: LegalDo
       <div className="mt-8 space-y-8">
         {sections.map((section) => (
           <section key={section.title}>
-            <h2 className={cn(HEADING_DISPLAY, SUBSECTION_TITLE)}>
+            <h2 className={SECTION_H2}>
               {section.title}
             </h2>
             {section.paragraphs?.map((paragraph) => (

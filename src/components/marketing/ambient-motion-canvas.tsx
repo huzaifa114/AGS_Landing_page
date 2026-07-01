@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type Particle = {
@@ -19,7 +18,6 @@ export interface AmbientMotionCanvasProps {
 
 function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const canvasEl = canvasRef.current;
@@ -27,6 +25,8 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
 
     const context = canvasEl.getContext("2d");
     if (!context) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const canvas = canvasEl;
     const ctx = context;
@@ -51,8 +51,8 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.floor((width * height) / 14000);
-      particles = Array.from({ length: Math.max(24, Math.min(count, 70)) }, () => ({
+      const count = Math.floor((width * height) / 22000);
+      particles = Array.from({ length: Math.max(16, Math.min(count, 42)) }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.35,
@@ -140,10 +140,12 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
       const dark = isDark();
       ctx.clearRect(0, 0, width, height);
 
-      drawGrid(dark);
-      drawStreaks(dark);
-      drawParticles(dark);
-      drawScanLine(dark);
+      if (frame % 2 === 0) {
+        drawGrid(dark);
+        drawStreaks(dark);
+        drawParticles(dark);
+        drawScanLine(dark);
+      }
 
       frame += 1;
       if (!reduceMotion) raf = requestAnimationFrame(paint);
@@ -183,7 +185,7 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
       visibilityObserver.disconnect();
       observer.disconnect();
     };
-  }, [reduceMotion]);
+  }, []);
 
   return (
     <canvas

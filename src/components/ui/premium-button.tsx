@@ -23,6 +23,7 @@ function PremiumButton({
   return (
     <Link
       href={href}
+      prefetch={false}
       className={cn(
         buttonVariants({
           variant: variant === "primary" ? "primary" : "outline",

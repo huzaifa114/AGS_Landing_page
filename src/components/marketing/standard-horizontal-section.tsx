@@ -10,7 +10,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { BODY_MUTED, HEADING_DISPLAY, SECTION_EYEBROW, SECTION_TITLE } from "@/lib/typography";
+import { BODY_MUTED, SECTION_EYEBROW, SECTION_H2, SECTION_META } from "@/lib/typography";
 
 export interface StandardPopup {
   label: string;
@@ -55,21 +55,24 @@ function StandardHorizontalSection({
   useLayoutEffect(() => {
     if (reduceMotion) return;
 
+    let rafId = 0;
     const measure = () => {
-      const track = trackRef.current;
-      const viewport = viewportRef.current;
-      if (!track || !viewport) return;
-      scrollRange.set(Math.max(0, track.scrollWidth - viewport.clientWidth));
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const track = trackRef.current;
+        const viewport = viewportRef.current;
+        if (!track || !viewport) return;
+        scrollRange.set(Math.max(0, track.scrollWidth - viewport.clientWidth));
+      });
     };
 
     measure();
-    const raf = requestAnimationFrame(measure);
     const observer = new ResizeObserver(measure);
     if (trackRef.current) observer.observe(trackRef.current);
     if (viewportRef.current) observer.observe(viewportRef.current);
     window.addEventListener("load", measure);
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafId);
       observer.disconnect();
       window.removeEventListener("load", measure);
     };
@@ -262,7 +265,7 @@ function StandardCard({
 
         <div className="relative">
           {item.eyebrow && <p className={SECTION_EYEBROW}>{item.eyebrow}</p>}
-          <h2 className={cn("mt-2", HEADING_DISPLAY, SECTION_TITLE)}>{item.title}</h2>
+          <h2 className={cn("mt-2", SECTION_H2)}>{item.title}</h2>
           <p className={cn("mt-3 max-w-xl", BODY_MUTED)}>{item.description}</p>
           {item.accent}
         </div>
@@ -349,7 +352,8 @@ function PopupWithArrow({
 }) {
   const variant = popupIndex % 2 === 0 ? "upper" : "lower";
   const badgeClassName = cn(
-    "relative z-20 inline-flex w-full max-w-[9.5rem] items-center justify-center rounded-full border px-3 py-2 text-center font-hud text-[10px] uppercase leading-tight tracking-wider",
+    "relative z-20 inline-flex w-full max-w-[9.5rem] items-center justify-center rounded-full border px-3 py-2 text-center leading-tight",
+    SECTION_META,
     "border-indigo-200 bg-white text-primary shadow-lg",
     "dark:border-cyan-400/40 dark:bg-[#121a33] dark:text-cyan-300 dark:shadow-[0_0_24px_rgb(56_189_248/0.25)]",
     popup.className

@@ -35,17 +35,6 @@ function SiteFooter({ className }: SiteFooterProps) {
                 {brand.tagline}
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-2">
-                {["$10 / card", "72hr target", "Digital reports", "Live verify"].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-indigo-200/80 bg-indigo-50/80 px-3 py-1 text-caption font-hud text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
               <div className="mt-8">
                 <PremiumButton href={navigation.submitCards.href} className="inline-flex items-center gap-2">
                   {navigation.submitCards.label}
@@ -63,6 +52,7 @@ function SiteFooter({ className }: SiteFooterProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
+                      prefetch={false}
                       className={cn(BODY_MUTED, "transition-colors hover:text-foreground dark:hover:text-white")}
                     >
                       {link.label}
@@ -81,6 +71,7 @@ function SiteFooter({ className }: SiteFooterProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
+                      prefetch={false}
                       className={cn(BODY_MUTED, "transition-colors hover:text-foreground dark:hover:text-white")}
                     >
                       {link.label}

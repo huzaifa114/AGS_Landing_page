@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import Link from "next/link";
 import { ArrowRight, Timer, Eye, Scale, Wallet } from "lucide-react";
 import { MarketingPage } from "@/components/layout/marketing-page";
-import { CinematicHero } from "@/components/marketing/cinematic-hero";
-import { HomeTrustMetrics } from "@/components/marketing/home-trust-metrics";
+import { CinematicHeroStatic } from "@/components/marketing/cinematic-hero-static";
+import { DeferredHeroEnhancements } from "@/components/marketing/deferred-hero-enhancements";
 import { BrandMarquee } from "@/components/marketing/brand-marquee";
 import { TrustBullets } from "@/components/marketing/trust-bullets";
-import { HeroCardStack } from "@/components/marketing/hero-card-stack";
-import { AnimatedFeatureCard } from "@/components/marketing/animated-feature-card";
-import { GlowingCardPair } from "@/components/marketing/glowing-card-pair";
-import { StandardHorizontalSection } from "@/components/marketing/standard-horizontal-section";
 import { SectionIntro } from "@/components/marketing/section-intro";
 import { TimelineStep } from "@/components/marketing/timeline-step";
+import { AnimatedFeatureCard } from "@/components/marketing/animated-feature-card";
 import { Checklist } from "@/components/marketing/checklist";
-import { ImagingShowcaseSection } from "@/components/marketing/imaging-showcase-section";
 import { PremiumButton } from "@/components/ui/premium-button";
 import { CTABand } from "@/components/marketing/cta-band";
-import { MotionReveal } from "@/components/motion/motion-reveal";
-import { StaggerItem, StaggerReveal } from "@/components/motion/stagger-reveal";
+import { CssReveal, CssStagger, CssStaggerItem } from "@/components/motion/css-reveal";
 import { Section } from "@/components/ui/section";
 import { buttonVariants } from "@/components/ui/button";
+import { DeferredHomeTrustMetrics } from "@/components/marketing/deferred-home-trust-metrics";
+import { DeferredStandardHorizontalSection } from "@/components/marketing/deferred-standard-horizontal-section";
+import { DeferredImagingShowcaseSection } from "@/components/marketing/deferred-imaging-showcase-section";
+import { DeferredGlowingCardPair } from "@/components/marketing/deferred-glowing-card-pair";
 import { cn } from "@/lib/utils";
-import { BODY_MUTED } from "@/lib/typography";
+import { BODY_MUTED, BODY_STRONG, GRADE_DISPLAY, GRADE_STAT, META_TEXT } from "@/lib/typography";
 import { home } from "@/data/site-content";
 
 export const metadata: Metadata = {
@@ -63,8 +63,8 @@ const WHITE_WHALE_STACK = [
     ],
     accent: (
       <div className="mt-6 flex items-baseline gap-3">
-        <span className="font-grade text-4xl font-extrabold text-primary dark:text-cyan-300">72</span>
-        <span className="text-h4 text-muted-foreground dark:text-slate-400">hour target turnaround</span>
+        <span className={cn(GRADE_DISPLAY, "text-primary dark:text-cyan-300")}>72</span>
+        <span className={BODY_MUTED}>hour target turnaround</span>
       </div>
     ),
   },
@@ -80,12 +80,12 @@ const WHITE_WHALE_STACK = [
     accent: (
       <div className="mt-6 inline-flex rounded-2xl border-2 border-indigo-200 bg-indigo-50 px-6 py-4 dark:border-indigo-500/30 dark:bg-indigo-500/10">
         <div>
-          <p className="font-hud text-caption text-primary dark:text-indigo-300">Standard grade</p>
-          <p className="font-grade text-3xl font-extrabold text-foreground dark:text-white">$10</p>
+          <p className={META_TEXT}>Standard grade</p>
+          <p className={GRADE_STAT}>$10</p>
         </div>
         <div className="ml-8 border-l-2 border-indigo-200 pl-8 dark:border-white/10">
-          <p className="font-hud text-caption text-primary dark:text-indigo-300">With subgrades</p>
-          <p className="font-grade text-3xl font-extrabold text-foreground dark:text-white">$20</p>
+          <p className={META_TEXT}>With subgrades</p>
+          <p className={GRADE_STAT}>$20</p>
         </div>
       </div>
     ),
@@ -93,40 +93,47 @@ const WHITE_WHALE_STACK = [
 ] as const;
 
 export default function HomePage() {
+  preload("/images/front.png", { as: "image", fetchPriority: "high" });
+
   const content = home;
+  const heroProps = {
+    title: `${content.hero.titleLine1} ${content.hero.titleLine2}`,
+    description: content.hero.description,
+    subtext: content.hero.subtext,
+    trustBullets: <TrustBullets items={[...content.trustBullets]} />,
+    primaryCta: { label: content.hero.primaryCta, href: "/submit-cards" },
+    secondaryCta: { label: content.hero.secondaryCta, href: "/how-it-works" },
+  };
 
   return (
     <MarketingPage>
-      <CinematicHero
-        title={`${content.hero.titleLine1} ${content.hero.titleLine2}`}
-        description={content.hero.description}
-        subtext={content.hero.subtext}
-        trustBullets={<TrustBullets items={[...content.trustBullets]} />}
-        primaryCta={{ label: content.hero.primaryCta, href: "/submit-cards" }}
-        secondaryCta={{ label: content.hero.secondaryCta, href: "/how-it-works" }}
-        media={<HeroCardStack />}
-      />
+      <div className="relative">
+        <CinematicHeroStatic {...heroProps} />
+        <DeferredHeroEnhancements />
+      </div>
 
       <BrandMarquee />
 
-      <HomeTrustMetrics />
+      <div className="content-auto">
+        <DeferredHomeTrustMetrics />
+      </div>
 
-      <Section spacing="md" className="bg-surface">
+      <Section spacing="md" className="content-auto bg-surface">
         <div className="grid items-center gap-8 lg:grid-cols-2">
           <div>
-            <MotionReveal>
+            <CssReveal>
               <SectionIntro
                 align="left"
                 title={content.collectorsDeserveBetter.title}
               />
-            </MotionReveal>
-            <MotionReveal delay={0.08}>
+            </CssReveal>
+            <CssReveal delay={0.08}>
               <div className={cn("mt-4 space-y-3", BODY_MUTED)}>
                 {content.collectorsDeserveBetter.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-            </MotionReveal>
+            </CssReveal>
             <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2">
               {content.collectorsDeserveBetter.painPoints.map((point, index) => {
                 const Icon = painPointIcons[index];
@@ -141,19 +148,19 @@ export default function HomePage() {
                 );
               })}
             </div>
-            <MotionReveal delay={0.2}>
-              <p className="mt-5 text-body-md font-semibold text-foreground leading-relaxed">
+            <CssReveal delay={0.2}>
+              <p className={cn("mt-5", BODY_STRONG)}>
                 {content.collectorsDeserveBetter.closing}
               </p>
-            </MotionReveal>
+            </CssReveal>
           </div>
-          <MotionReveal delay={0.12} direction="none">
-            <GlowingCardPair autoFlip />
-          </MotionReveal>
+          <CssReveal delay={0.12} direction="none">
+            <DeferredGlowingCardPair autoFlip />
+          </CssReveal>
         </div>
       </Section>
 
-      <StandardHorizontalSection
+      <DeferredStandardHorizontalSection
         header={
           <SectionIntro
             eyebrow="Our Standard"
@@ -165,43 +172,44 @@ export default function HomePage() {
         items={[...WHITE_WHALE_STACK]}
       />
 
-      <ImagingShowcaseSection />
+      <DeferredImagingShowcaseSection />
 
-      <Section spacing="md" className="bg-surface">
-        <MotionReveal>
+      <Section spacing="md" className="content-auto bg-surface">
+        <CssReveal>
           <SectionIntro
             eyebrow={content.howItWorks.eyebrow}
             title={content.howItWorks.title}
             description={content.howItWorks.description}
           />
-        </MotionReveal>
-        <StaggerReveal className="mt-6 grid gap-5 lg:grid-cols-2">
+        </CssReveal>
+        <CssStagger className="mt-6 grid gap-5 lg:grid-cols-2">
           {content.howItWorks.steps.map((step, index) => (
-            <StaggerItem key={step.title} index={index}>
+            <CssStaggerItem key={step.title} index={index}>
               <TimelineStep
                 step={index + 1}
                 title={step.title}
                 description={step.description}
                 isLast={index === content.howItWorks.steps.length - 1}
               />
-            </StaggerItem>
+            </CssStaggerItem>
           ))}
-        </StaggerReveal>
-        <MotionReveal delay={0.15}>
+        </CssStagger>
+        <CssReveal delay={0.15}>
           <div className="mt-5">
             <Link
               href="/how-it-works"
+              prefetch={false}
               className={cn(buttonVariants({ variant: "outline", size: "md" }), "gap-2")}
             >
               {content.howItWorks.cta}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </MotionReveal>
+        </CssReveal>
       </Section>
 
-      <Section spacing="md" className="bg-surface-muted/70">
-        <MotionReveal>
+      <Section spacing="md" className="content-auto bg-surface-muted/70">
+        <CssReveal>
           <div className="grid items-start gap-8 lg:grid-cols-2">
             <div>
               <SectionIntro align="left" title={content.moreThanGrade.title} />
@@ -218,11 +226,11 @@ export default function HomePage() {
                 </PremiumButton>
               </div>
             </div>
-            <MotionReveal delay={0.1}>
-              <GlowingCardPair />
-            </MotionReveal>
+            <CssReveal delay={0.1}>
+              <DeferredGlowingCardPair />
+            </CssReveal>
           </div>
-        </MotionReveal>
+        </CssReveal>
       </Section>
 
       <CTABand

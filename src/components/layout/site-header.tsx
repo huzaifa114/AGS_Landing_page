@@ -1,15 +1,24 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { MobileNav } from "./mobile-nav";
 import { AuthNav } from "./auth-nav";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { navigation } from "@/data/site-content";
+
+const ThemedToggle = dynamic(
+  () => import("@/components/theme/themed-toggle").then((m) => m.ThemedToggle),
+  { ssr: false, loading: () => <span className="inline-block h-9 w-9" aria-hidden /> }
+);
+
+const MobileNav = dynamic(
+  () => import("./mobile-nav").then((m) => m.MobileNav),
+  { ssr: false }
+);
 
 export interface SiteHeaderProps {
   className?: string;
@@ -30,7 +39,7 @@ function SiteHeader({ className }: SiteHeaderProps) {
         >
           <div className="flex h-14 items-center justify-between gap-4 px-4 sm:h-16 sm:px-5 lg:px-6">
             <div className="flex min-w-0 items-center gap-6 lg:gap-10">
-              <BrandLogo size="sm" />
+              <BrandLogo size="sm" animated />
               <nav
                 className="hidden items-center gap-0.5 lg:flex"
                 aria-label="Main navigation"
@@ -39,6 +48,7 @@ function SiteHeader({ className }: SiteHeaderProps) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    prefetch={false}
                     className="rounded-lg px-3 py-2 text-body-sm font-medium text-foreground/75 transition-colors hover:bg-indigo-50 hover:text-foreground dark:hover:bg-surface-muted"
                   >
                     {item.label}
@@ -48,10 +58,11 @@ function SiteHeader({ className }: SiteHeaderProps) {
             </div>
 
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <ThemeToggle compact />
+              <ThemedToggle compact />
               <AuthNav />
               <Link
                 href={navigation.submitCards.href}
+                prefetch={false}
                 className={cn(
                   buttonVariants({ variant: "primary", size: "md" }),
                   "hidden text-white sm:inline-flex"
@@ -74,11 +85,13 @@ function SiteHeader({ className }: SiteHeaderProps) {
         </header>
       </div>
 
-      <MobileNav
-        open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-        navItems={[...navigation.items]}
-      />
+      {mobileOpen ? (
+        <MobileNav
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+          navItems={[...navigation.items]}
+        />
+      ) : null}
     </>
   );
 }

@@ -21,6 +21,7 @@
 # misc
 .DS_Store
 *.pem
+lighthouse*.json
 
 # debug
 npm-debug.log*

@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { BODY_MUTED } from "@/lib/typography";
+import { BODY_MUTED, BODY_STRONG } from "@/lib/typography";
 
 export interface ChecklistItem {
   text: string;
@@ -24,7 +24,7 @@ function Checklist({ items, className }: ChecklistProps) {
             <Check className="h-3.5 w-3.5" strokeWidth={3} />
           </span>
           <div>
-            <p className="text-body-md font-semibold text-foreground">
+            <p className={BODY_STRONG}>
               {item.text}
             </p>
             {item.description && (

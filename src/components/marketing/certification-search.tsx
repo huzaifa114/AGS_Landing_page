@@ -82,19 +82,19 @@ function CertificationSearch({
         }
       />
     ) : (
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <Input
-          label={certificationSearch.label}
           placeholder={certificationSearch.placeholder}
           value={certNumber}
           onChange={(e) => setCertNumber(e.target.value)}
           error={error}
           iconLeft={<Search className="h-4 w-4" />}
+          className="h-10"
         />
         <Button
           type="submit"
           variant="primary"
-          size="md"
+          size="sm"
           className="w-full text-white sm:w-auto"
           loading={loading}
         >
@@ -108,8 +108,8 @@ function CertificationSearch({
   }
 
   return (
-    <Card className={cn("ai-console border-border/80 shadow-premium", className)}>
-      <CardContent className={cn("p-6", !compact && "sm:p-8")}>
+    <Card className={cn("ai-console border-border/80 shadow-sm", className)}>
+      <CardContent className={cn("p-4", !compact && "sm:p-5")}>
         {formContent}
       </CardContent>
     </Card>

@@ -6,6 +6,13 @@ import { StatusPill } from "@/components/ui/status-pill";
 import { buttonVariants } from "@/components/ui/button";
 import { CertificationImagePlaceholder } from "@/components/certifications/certification-image-placeholder";
 import type { CertificationRecord } from "@/lib/certifications/types";
+import {
+  BODY_MUTED,
+  BODY_TEXT,
+  CARD_H3,
+  GRADE_STAT,
+  META_TEXT,
+} from "@/lib/typography";
 
 export interface CertificationDetailViewProps {
   certification: CertificationRecord;
@@ -51,10 +58,10 @@ function CertificationDetailView({
                 <Shield className="h-6 w-6" />
               </div>
               <div>
-                <p className="text-caption text-muted-foreground">
+                <p className={META_TEXT}>
                   Certification Record
                 </p>
-                <h2 className="font-mono text-h4 font-semibold">
+                <h2 className={cn("font-mono", CARD_H3)}>
                   {certification.certificationNumber}
                 </h2>
               </div>
@@ -70,14 +77,14 @@ function CertificationDetailView({
 
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
             <div>
-              <p className="text-caption text-muted-foreground">Grade</p>
-              <p className="mt-2 text-h2 font-semibold text-primary">
+              <p className={META_TEXT}>Grade</p>
+              <p className={cn("mt-2", GRADE_STAT, "text-primary")}>
                 {certification.grade}
               </p>
             </div>
             <div>
-              <p className="text-caption text-muted-foreground">Grading Date</p>
-              <p className="mt-2 text-body-md font-medium">
+              <p className={META_TEXT}>Grading Date</p>
+              <p className={cn("mt-2", BODY_TEXT, "font-medium")}>
                 {certification.gradingDate.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -86,8 +93,8 @@ function CertificationDetailView({
               </p>
             </div>
             <div>
-              <p className="text-caption text-muted-foreground">Submission</p>
-              <p className="mt-2 font-mono text-body-md font-medium text-foreground">
+              <p className={META_TEXT}>Submission</p>
+              <p className={cn("mt-2 font-mono", BODY_TEXT, "font-medium")}>
                 {certification.submissionNumber}
               </p>
             </div>
@@ -98,26 +105,26 @@ function CertificationDetailView({
       <div className="grid gap-8 lg:grid-cols-2">
         <Card className="border-border/60">
           <CardContent className="p-6 sm:p-8">
-            <h3 className="text-h4 font-semibold">Card Information</h3>
-            <p className="mt-4 text-body-md font-medium">
+            <h3 className={CARD_H3}>Card Information</h3>
+            <p className={cn("mt-4", BODY_TEXT, "font-medium")}>
               {certification.card.cardName}
             </p>
             <dl className="mt-4 grid gap-3 sm:grid-cols-2">
               {certification.card.year && (
                 <div>
-                  <dt className="text-body-sm text-muted">Year</dt>
+                  <dt className={BODY_MUTED}>Year</dt>
                   <dd className="font-medium">{certification.card.year}</dd>
                 </div>
               )}
               {certification.card.setName && (
                 <div>
-                  <dt className="text-body-sm text-muted">Set</dt>
+                  <dt className={BODY_MUTED}>Set</dt>
                   <dd className="font-medium">{certification.card.setName}</dd>
                 </div>
               )}
               {certification.card.playerName && (
                 <div>
-                  <dt className="text-body-sm text-muted">Player</dt>
+                  <dt className={BODY_MUTED}>Player</dt>
                   <dd className="font-medium">
                     {certification.card.playerName}
                   </dd>
@@ -125,7 +132,7 @@ function CertificationDetailView({
               )}
               {certification.card.category && (
                 <div>
-                  <dt className="text-body-sm text-muted">Category</dt>
+                  <dt className={BODY_MUTED}>Category</dt>
                   <dd className="font-medium">{certification.card.category}</dd>
                 </div>
               )}
@@ -148,7 +155,7 @@ function CertificationDetailView({
       <Card className="border-border/60">
         <CardContent className="p-6 sm:p-8">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <h3 className="text-h4 font-semibold">Timeline</h3>
+            <h3 className={CARD_H3}>Timeline</h3>
             <Link
               href={`/verify-certification/${certification.certificationNumber}`}
               className={buttonVariants({ variant: "outline", size: "md" })}
@@ -172,10 +179,10 @@ function CertificationDetailView({
                   </div>
                   <div>
                     <p className="text-body-md font-medium">{event.title}</p>
-                    <p className="mt-0.5 text-body-sm text-muted">
+                    <p className={cn("mt-0.5", BODY_MUTED)}>
                       {event.description}
                     </p>
-                    <p className="mt-1 text-body-sm text-muted-foreground">
+                    <p className={cn("mt-1", BODY_MUTED)}>
                       {event.date.toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",

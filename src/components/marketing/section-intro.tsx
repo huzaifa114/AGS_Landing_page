@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
 import {
-  HEADING_DISPLAY,
   PAGE_LEAD,
   SECTION_EYEBROW,
-  SECTION_TITLE,
+  SECTION_H2,
 } from "@/lib/typography";
 
 export interface SectionIntroProps {
@@ -40,8 +39,7 @@ function SectionIntro({
       )}
       <h2
         className={cn(
-          HEADING_DISPLAY,
-          SECTION_TITLE,
+          SECTION_H2,
           eyebrow ? "mt-3" : undefined,
           titleClassName
         )}

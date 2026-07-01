@@ -32,7 +32,7 @@ function CardImageFace({
           src={src}
           alt={alt}
           fill
-          className="object-cover"
+          className="object-contain p-2"
           sizes="(max-width: 640px) 45vw, 220px"
           priority={side === "front"}
         />

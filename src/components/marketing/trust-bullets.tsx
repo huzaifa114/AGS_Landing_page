@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import { BODY_STRONG } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
 export interface TrustBulletsProps {
@@ -8,16 +9,24 @@ export interface TrustBulletsProps {
 
 function TrustBullets({ items, className }: TrustBulletsProps) {
   return (
-    <ul className={cn("flex flex-col gap-3", className)} role="list">
+    <ul className={cn("flex flex-wrap gap-2.5 sm:gap-3", className)} role="list">
       {items.map((item) => (
-        <li key={item} className="flex items-center gap-3">
+        <li key={item} className="relative">
           <span
-            className="check-icon-glow flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-primary ring-1 ring-primary/20 dark:bg-accent-soft dark:text-accent"
+            className={cn(
+              "inline-flex items-center rounded-full border border-primary/35 bg-indigo-50/70 px-4 py-2.5",
+              BODY_STRONG,
+              "dark:border-cyan-400/40 dark:bg-white/[0.04] dark:text-slate-100"
+            )}
+          >
+            {item}
+          </span>
+          <span
+            className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white shadow-sm dark:bg-cyan-400 dark:text-[#060a18]"
             aria-hidden="true"
           >
-            <Check className="h-3.5 w-3.5" strokeWidth={3} />
+            <Check className="h-3 w-3" strokeWidth={3} />
           </span>
-          <span className="text-body-md font-semibold text-foreground">{item}</span>
         </li>
       ))}
     </ul>

@@ -1,12 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { navigation } from "@/data/site-content";
+
+const ThemedToggle = dynamic(
+  () => import("@/components/theme/themed-toggle").then((m) => m.ThemedToggle),
+  { ssr: false, loading: () => <span className="inline-block h-9 w-9" aria-hidden /> }
+);
 
 export interface MobileNavProps {
   open: boolean;
@@ -35,7 +40,7 @@ function MobileNav({ open, onClose, navItems }: MobileNavProps) {
         aria-hidden={!open}
       >
         <div className="flex items-center justify-between border-b border-border p-6">
-          <BrandLogo size="sm" onClick={onClose} />
+          <BrandLogo size="sm" animated onClick={onClose} />
           <Button
             variant="ghost"
             size="sm"
@@ -52,6 +57,7 @@ function MobileNav({ open, onClose, navItems }: MobileNavProps) {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={false}
               onClick={onClose}
               className="rounded-xl px-4 py-3 text-body-md font-medium text-foreground transition-colors hover:bg-surface-muted"
             >
@@ -63,10 +69,11 @@ function MobileNav({ open, onClose, navItems }: MobileNavProps) {
         <div className="flex flex-col gap-3 border-t border-border p-6">
           <div className="flex items-center justify-between">
             <span className="text-body-sm font-medium text-foreground">Theme</span>
-            <ThemeToggle />
+            <ThemedToggle />
           </div>
           <Link
             href={navigation.login.href}
+            prefetch={false}
             onClick={onClose}
             className={buttonVariants({ variant: "outline", size: "md" })}
           >
@@ -74,6 +81,7 @@ function MobileNav({ open, onClose, navItems }: MobileNavProps) {
           </Link>
           <Link
             href={navigation.submitCards.href}
+            prefetch={false}
             onClick={onClose}
             className={cn(buttonVariants({ variant: "primary", size: "md" }), "text-white")}
           >
