@@ -47,6 +47,8 @@ function BrandPill({ brand }: { brand: BrandItem }) {
         alt={`${brand.name} logo`}
         width={brand.wide ? 130 : 110}
         height={32}
+        loading="lazy"
+        decoding="async"
         className={cn(
           "relative z-10 w-auto object-contain brightness-110 contrast-125",
           brand.logoDark ? "dark:hidden" : undefined,
@@ -61,6 +63,8 @@ function BrandPill({ brand }: { brand: BrandItem }) {
           alt=""
           width={brand.wide ? 130 : 110}
           height={32}
+          loading="lazy"
+          decoding="async"
           className={cn(
             "relative z-10 hidden w-auto object-contain brightness-110 contrast-125 dark:block",
             brand.wide ? "h-8 max-w-[130px]" : "h-8 max-w-[110px]"

@@ -1,22 +1,31 @@
 "use client";
 
-import { AmbientHeroBackground } from "@/components/marketing/ambient-hero-background";
-import { IdleMount } from "@/components/motion/idle-mount";
+import dynamic from "next/dynamic";
+import { InteractionMount } from "@/components/motion/interaction-mount";
 
-/** Ambient canvas/gradient only — cards stay in hero grid (no absolute overlay). */
-function HeroEnhancements() {
-  return (
-    <div className="hero-enhancements-active pointer-events-none absolute inset-0 z-[1]" aria-hidden="true">
-      <AmbientHeroBackground />
-    </div>
-  );
-}
+const AmbientMotionCanvas = dynamic(
+  () =>
+    import("@/components/marketing/ambient-motion-canvas").then(
+      (m) => m.AmbientMotionCanvas
+    ),
+  { ssr: false }
+);
 
+/**
+ * Adds only the ambient particle canvas on top of the hero. The CSS orbs, mesh
+ * and gradients are already rendered statically by CinematicHeroStatic, so we
+ * intentionally do NOT duplicate them here.
+ */
 function DeferredHeroEnhancements() {
   return (
-    <IdleMount fallback={null} idleTimeoutMs={3500}>
-      <HeroEnhancements />
-    </IdleMount>
+    <InteractionMount fallback={null}>
+      <div
+        className="hero-enhancements-active pointer-events-none absolute inset-0 z-[1] overflow-hidden"
+        aria-hidden="true"
+      >
+        <AmbientMotionCanvas />
+      </div>
+    </InteractionMount>
   );
 }
 

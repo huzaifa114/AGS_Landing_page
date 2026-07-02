@@ -1,15 +1,29 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { type ReactNode } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
-import { DeferredSiteFooter } from "@/components/layout/deferred-site-footer";
-import { DeferredScrollProgress } from "@/components/motion/deferred-scroll-progress";
+import { InteractionMount } from "@/components/motion/interaction-mount";
+
+const ScrollProgress = dynamic(
+  () => import("@/components/motion/scroll-progress").then((m) => m.ScrollProgress),
+  { ssr: false }
+);
+
+const SiteFooter = dynamic(
+  () => import("@/components/layout/site-footer").then((m) => m.SiteFooter),
+  { loading: () => <div className="min-h-[28rem]" aria-hidden /> }
+);
 
 function MarketingPage({ children }: { children: ReactNode }) {
   return (
     <>
-      <DeferredScrollProgress />
+      <InteractionMount fallback={null}>
+        <ScrollProgress />
+      </InteractionMount>
       <SiteHeader />
       <main>{children}</main>
-      <DeferredSiteFooter />
+      <SiteFooter />
     </>
   );
 }

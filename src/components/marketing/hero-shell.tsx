@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { LazyMotion, domAnimation, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { AmbientHeroBackground } from "@/components/marketing/ambient-hero-background";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
@@ -47,7 +47,6 @@ function HeroShell({
         };
 
   return (
-    <LazyMotion features={domAnimation} strict={false}>
     <section
       className={cn(
         "page-hero relative overflow-hidden",
@@ -125,7 +124,6 @@ function HeroShell({
         </div>
       </Container>
     </section>
-    </LazyMotion>
   );
 }
 

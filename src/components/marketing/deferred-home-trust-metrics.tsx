@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { IdleMount } from "@/components/motion/idle-mount";
+import { ViewportMount } from "@/components/motion/viewport-mount";
 import { HomeTrustMetricsStatic } from "@/components/marketing/home-trust-metrics-static";
 
 const HomeTrustMetrics = dynamic(
@@ -11,9 +11,9 @@ const HomeTrustMetrics = dynamic(
 
 function DeferredHomeTrustMetrics() {
   return (
-    <IdleMount fallback={<HomeTrustMetricsStatic />} idleTimeoutMs={5000}>
+    <ViewportMount fallback={<HomeTrustMetricsStatic />}>
       <HomeTrustMetrics />
-    </IdleMount>
+    </ViewportMount>
   );
 }
 

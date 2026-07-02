@@ -141,10 +141,9 @@ function HudMetricCard({
         <span className="hud-corner bottom-2 right-2 border-b-2 border-r-2" />
 
         {!reduceMotion && (
-          <motion.div
-            className="pointer-events-none absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent dark:via-cyan-400/60"
-            animate={{ top: ["0%", "100%"] }}
-            transition={{ duration: 3.2 + index * 0.4, repeat: Infinity, ease: "linear" }}
+          <div
+            className="hud-scanline pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent dark:via-cyan-400/60"
+            style={{ animationDuration: `${3.2 + index * 0.4}s` }}
           />
         )}
 

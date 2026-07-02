@@ -42,8 +42,10 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
 
     const isDark = () => document.documentElement.classList.contains("dark");
 
+    const isSmall = () => window.innerWidth < 640;
+
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, isSmall() ? 1 : 1.5);
       const rect = canvas.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
@@ -51,8 +53,10 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.floor((width * height) / 22000);
-      particles = Array.from({ length: Math.max(16, Math.min(count, 42)) }, () => ({
+      const density = isSmall() ? 42000 : 26000;
+      const cap = isSmall() ? 14 : 26;
+      const count = Math.floor((width * height) / density);
+      particles = Array.from({ length: Math.max(10, Math.min(count, cap)) }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.35,
@@ -137,18 +141,19 @@ function AmbientMotionCanvas({ className }: AmbientMotionCanvasProps) {
 
     function paint() {
       if (!visible) return;
-      const dark = isDark();
-      ctx.clearRect(0, 0, width, height);
-
-      if (frame % 2 === 0) {
-        drawGrid(dark);
-        drawStreaks(dark);
-        drawParticles(dark);
-        drawScanLine(dark);
-      }
 
       frame += 1;
       if (!reduceMotion) raf = requestAnimationFrame(paint);
+
+      // Throttle to ~20fps: skip drawing on most frames (background layer).
+      if (frame % 3 !== 0) return;
+
+      const dark = isDark();
+      ctx.clearRect(0, 0, width, height);
+      drawGrid(dark);
+      drawStreaks(dark);
+      drawParticles(dark);
+      drawScanLine(dark);
     }
 
     function startLoop() {

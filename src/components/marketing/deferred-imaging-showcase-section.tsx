@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { IdleMount } from "@/components/motion/idle-mount";
+import { ViewportMount } from "@/components/motion/viewport-mount";
 
 const ImagingShowcaseSection = dynamic(
   () =>
@@ -13,12 +13,9 @@ const ImagingShowcaseSection = dynamic(
 
 function DeferredImagingShowcaseSection() {
   return (
-    <IdleMount
-      fallback={<div className="min-h-[50vh]" aria-hidden />}
-      idleTimeoutMs={6500}
-    >
+    <ViewportMount fallback={<div className="min-h-[50vh]" aria-hidden />}>
       <ImagingShowcaseSection />
-    </IdleMount>
+    </ViewportMount>
   );
 }
 

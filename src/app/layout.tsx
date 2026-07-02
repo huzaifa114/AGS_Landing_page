@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat, Orbitron, Share_Tech_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PageLoader } from "@/components/motion/page-loader";
 import { brand } from "@/data/site-content";
 import "./globals.css";
@@ -14,10 +15,8 @@ const inter = Inter({
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
-  display: "optional",
-  weight: ["800"],
-  preload: true,
-  adjustFontFallback: true,
+  display: "swap",
+  weight: ["700", "800"],
 });
 
 const orbitron = Orbitron({
@@ -52,15 +51,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${inter.variable} ${montserrat.variable} ${orbitron.variable} ${shareTechMono.variable}`}
+      className={`${inter.variable} ${montserrat.variable} ${orbitron.variable} ${shareTechMono.variable}`}
       suppressHydrationWarning
     >
       <body
         className="min-h-screen bg-background font-sans antialiased"
         suppressHydrationWarning
       >
-        <PageLoader />
-        <div className="site-content">{children}</div>
+        <ThemeProvider>
+          <PageLoader />
+          <div className="site-content">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );

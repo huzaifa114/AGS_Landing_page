@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { preload } from "react-dom";
 import Link from "next/link";
 import { ArrowRight, Timer, Eye, Scale, Wallet } from "lucide-react";
 import { MarketingPage } from "@/components/layout/marketing-page";
@@ -93,8 +92,6 @@ const WHITE_WHALE_STACK = [
 ] as const;
 
 export default function HomePage() {
-  preload("/images/front.png", { as: "image", fetchPriority: "high" });
-
   const content = home;
   const heroProps = {
     title: `${content.hero.titleLine1} ${content.hero.titleLine2}`,
@@ -198,7 +195,6 @@ export default function HomePage() {
           <div className="mt-5">
             <Link
               href="/how-it-works"
-              prefetch={false}
               className={cn(buttonVariants({ variant: "outline", size: "md" }), "gap-2")}
             >
               {content.howItWorks.cta}

@@ -2,8 +2,7 @@ import Link from "next/link";
 import { type ReactNode } from "react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
-import { HeroCardStackPlaceholder } from "@/components/marketing/hero-card-stack-placeholder";
-import { HeroMediaSwitch } from "@/components/marketing/hero-media-switch";
+import { HeroMediaCell } from "@/components/marketing/hero-media-cell";
 import { cn } from "@/lib/utils";
 import { PAGE_HERO_H1, PAGE_LEAD, BODY_MUTED } from "@/lib/typography";
 import { formatPageHeroTitle } from "@/components/marketing/page-hero-title";
@@ -45,7 +44,7 @@ function CinematicHeroStatic({
       <Container className="relative z-10">
         <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:items-center lg:gap-10">
           <div className="relative z-20 flex flex-col gap-4">
-            <h1 className={cn("home-hero-h1 max-w-3xl", PAGE_HERO_H1)}>
+            <h1 className={cn("max-w-3xl", PAGE_HERO_H1)}>
               {formatPageHeroTitle(title)}
             </h1>
 
@@ -63,7 +62,6 @@ function CinematicHeroStatic({
                 {primaryCta && (
                   <Link
                     href={primaryCta.href}
-                    prefetch={false}
                     className={cn(
                       buttonVariants({ variant: "primary", size: "md" }),
                       "text-white shadow-[0_4px_20px_rgb(99_102_241/0.35)]"
@@ -75,7 +73,6 @@ function CinematicHeroStatic({
                 {secondaryCta && (
                   <Link
                     href={secondaryCta.href}
-                    prefetch={false}
                     className={buttonVariants({ variant: "outline", size: "md" })}
                   >
                     {secondaryCta.label}
@@ -90,7 +87,7 @@ function CinematicHeroStatic({
               className="pointer-events-none absolute -inset-4 rounded-3xl bg-primary/10 opacity-50 blur-2xl sm:-inset-6"
               aria-hidden="true"
             />
-            <HeroMediaSwitch placeholder={<HeroCardStackPlaceholder />} />
+            <HeroMediaCell />
           </div>
         </div>
       </Container>

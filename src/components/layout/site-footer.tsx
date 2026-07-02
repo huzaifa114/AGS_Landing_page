@@ -52,7 +52,6 @@ function SiteFooter({ className }: SiteFooterProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      prefetch={false}
                       className={cn(BODY_MUTED, "transition-colors hover:text-foreground dark:hover:text-white")}
                     >
                       {link.label}
@@ -71,7 +70,6 @@ function SiteFooter({ className }: SiteFooterProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      prefetch={false}
                       className={cn(BODY_MUTED, "transition-colors hover:text-foreground dark:hover:text-white")}
                     >
                       {link.label}

@@ -200,6 +200,11 @@
 
   .ambient-orb {
     animation: orb-float 14s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .ambient-mesh {
+    will-change: transform, opacity;
   }
 
   .ambient-orb-b {
@@ -355,6 +360,8 @@
 
 .brand-marquee-track {
   animation: brand-marquee-scroll 34s linear infinite;
+  will-change: transform;
+  contain: layout;
 }
 
 .brand-marquee-track-reverse {
@@ -412,11 +419,35 @@
 .feature-card-float {
   animation: feature-card-float 2.8s ease-in-out infinite;
   animation-delay: calc(var(--card-index, 0) * 0.35s);
+  will-change: transform;
+  contain: layout;
 }
 
 .feature-card-icon {
   animation: feature-card-icon-pulse 2.5s ease-in-out infinite;
   animation-delay: calc(var(--card-index, 0) * 0.2s);
+}
+
+.hud-scanline {
+  animation-name: hud-scan;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes hud-scan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(320px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-scanline {
+    animation: none !important;
+  }
 }
 
 @keyframes feature-card-enter {
@@ -726,48 +757,6 @@ html:not([data-loader-done="true"]) body {
 @media (prefers-reduced-motion: reduce) {
   .page-loader {
     display: none;
-  }
-}
-
-.home-hero-h1 {
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-}
-
-@media (min-width: 1024px) {
-  .home-hero-h1 {
-    font-family: var(--font-display);
-  }
-}
-
-/* Hero card stack — CSS-only responsive sizing (no ResizeObserver on LCP path) */
-.hero-stack-shell {
-  container-type: inline-size;
-  container-name: hero-stack;
-}
-
-.hero-stack-viewport {
-  position: relative;
-  width: 100%;
-  height: clamp(280px, calc(100cqi * 440 / 520), 440px);
-}
-
-.hero-stack-canvas {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 520px;
-  height: 440px;
-  transform: translate(-50%, -50%) scale(min(1, max(0.46, 100cqi / 520)));
-  transform-origin: center;
-}
-
-@supports not (height: 1cqi) {
-  .hero-stack-viewport {
-    height: clamp(248px, 44vw, 440px);
-  }
-
-  .hero-stack-canvas {
-    transform: translate(-50%, -50%) scale(clamp(0.46, 0.75, 1));
   }
 }
 

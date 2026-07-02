@@ -10,9 +10,9 @@ import { AuthNav } from "./auth-nav";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { navigation } from "@/data/site-content";
 
-const ThemedToggle = dynamic(
-  () => import("@/components/theme/themed-toggle").then((m) => m.ThemedToggle),
-  { ssr: false, loading: () => <span className="inline-block h-9 w-9" aria-hidden /> }
+const ThemeToggle = dynamic(
+  () => import("@/components/theme/theme-toggle").then((m) => m.ThemeToggle),
+  { ssr: false, loading: () => <span className="inline-block h-8 w-8" aria-hidden /> }
 );
 
 const MobileNav = dynamic(
@@ -48,7 +48,6 @@ function SiteHeader({ className }: SiteHeaderProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    prefetch={false}
                     className="rounded-lg px-3 py-2 text-body-sm font-medium text-foreground/75 transition-colors hover:bg-indigo-50 hover:text-foreground dark:hover:bg-surface-muted"
                   >
                     {item.label}
@@ -58,11 +57,10 @@ function SiteHeader({ className }: SiteHeaderProps) {
             </div>
 
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <ThemedToggle compact />
+              <ThemeToggle compact />
               <AuthNav />
               <Link
                 href={navigation.submitCards.href}
-                prefetch={false}
                 className={cn(
                   buttonVariants({ variant: "primary", size: "md" }),
                   "hidden text-white sm:inline-flex"
